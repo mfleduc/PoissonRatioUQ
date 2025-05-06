@@ -1,10 +1,10 @@
 Package: PoissonRatioUQ
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Performing Estimation and Uncertainty Quantification for Estimating Ratios of Poisson Means and Affine Functions Thereof
 Version: 0.1.0
 Author: Matthew LeDuc
 Maintainer: Matthew LeDuc <matthew.leduc@colorado.edu>
-Description: Uncertainty quantification for problems of estimating ratios of Poisson intensity parameters, with particular extensions for operators of the form $y = mZ+b$, with Z the ratio of the intensity.
+Description: Uncertainty quantification for problems of estimating ratios of Poisson intensity parameters, with particular extensions for operators of the form $y = mZ+b$, with Z the ratio of the intensities.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true

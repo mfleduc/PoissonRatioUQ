@@ -17,8 +17,7 @@ HPDSet <- function(x, fx , alpha){
     mask <- (fx<=h)
     fxm <- fx
     fxm[mask] <- 0
-    fx_approx <- approxfun(x, fxm, method="linear", yleft=0, yright=0, rule=2)
-    intVal <- integrate(fx_approx,min(x),max(x))$value
+    intVal <- pracma::trapz(x,fxm)
     return(intVal-alpha)
   }
   #Do rootfinding

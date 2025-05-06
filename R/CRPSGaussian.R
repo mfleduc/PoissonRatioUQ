@@ -4,6 +4,6 @@ CRPSGaussian <- function(mu,sigma,xhat){
   z <- (xhat-mu)/sigma# Convert to standard normal
   pdfVal <- dnorm(z, 0 ,1)#Evaluate the PDF
   cdfVal <- pnorm(z, 0, 1)#Evaluate the CDF
-  CRPS <- -1*sigma*(1/sqrt(pi)*-2*pdfVal-z*(2*cdfVal-1))
-  return(CRPS)
+  crps <- -1*sigma*(1/sqrt(pi)-2*pdfVal-z*(2*cdfVal-1))
+  return(crps)
 }

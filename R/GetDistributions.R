@@ -29,7 +29,8 @@ ZBetaPrime <-function(a,b,k1=0,k2=0){
   n2 <- length(b)
   alpha <- suma+1-k1#Calculating the parameters
   beta <- sumb+1-k2#
-  p<-1#Will always be this
+  p<-1#Will always be this most likely
   q<- n2/n1
   param_list <- list('alpha'=alpha,'beta'=beta,'p'=p,'q'=q)
+  return(param_list)
 }
