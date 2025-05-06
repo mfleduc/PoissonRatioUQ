@@ -1,4 +1,3 @@
-
 ZGaussian <- function(a,b){
   # Returns the parameters of the distribution given by propagating the uncertainty in the photon counts
   #under the assumption that Z has a normal distribution
@@ -17,7 +16,7 @@ ZGaussian <- function(a,b){
   param_list <- list('mean'=mu, 'stdev'=sigma_Z)
   return(param_list)
 }
-ZBetaPrime(a,b)<-function(a,b,k1=0,k2=0){
+ZBetaPrime <-function(a,b,k1=0,k2=0){
   #Returns the parameters of the distribution given by propagating uncertainty
   #under the assumption that Z has a Beta-Prime distribution, equivalent to performing
   # a Bayesian update for the mean parameters of the Poisson distributions under the priors

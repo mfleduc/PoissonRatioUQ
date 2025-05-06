@@ -8,3 +8,7 @@ Description: Uncertainty quantification for problems of estimating ratios of Poi
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
