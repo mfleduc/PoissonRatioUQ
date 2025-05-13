@@ -2,7 +2,7 @@ library(pracma)
 CRPS <- function( x,pdf=NULL,cdf=NULL,xhat=NULL ){
   #Calculates the Continuous Rank Probability Score
   # for predictive distribution with input pdf/cdf and observation xhat
-# Given by \int_{R}(F(y)-H(x-y))^2 dx
+# Given by \int_{R}(F(y)-H(y-x))^2 dy
 if(is.null(cdf)){
   stopifnot(!is.null(pdf))
   cdf <- numeric(length(x))

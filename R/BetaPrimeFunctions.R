@@ -1,14 +1,14 @@
 #Functions for the beta-prime distribution
-#PDF and RNG are implemented right now
+#PDF, CDF, and RNG are implemented right now
 dbetaprime <- function( x,alphaparam,betaparam, p=1,q=1 ){
   mask <- x<=0
   x[mask]=0
   xq<-x/q
-  scaling <- p/(q*beta(alphaparam,betaparam))
-  numerator <- xq^(alphaparam*p-1)
-  denominator <- (1+xq^p)^(alphaparam+betaparam)
-  pdf <- scaling*numerator/denominator
-  return(pdf)
+  scaling <- log(p)-log(q)-lbeta(alphaparam,betaparam)
+  numerator <- log(xq)*(alphaparam*p-1)
+  denominator <- log(1+xq^p)*(alphaparam+betaparam)
+  logpdf <- scaling + numerator - denominator
+  return(exp(logpdf))
 }
 pbetaprime <- function(x, alphaparam,betaparam,p=1,q=1){
   mask <- x<=0
