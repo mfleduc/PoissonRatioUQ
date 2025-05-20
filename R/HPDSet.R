@@ -1,4 +1,4 @@
-HPDSet <- function(x, fx , alpha){
+hpdset <- function(x, fx , alpha){
   #Compute the HPD alpha-credible set for an arbitrary distribution.
   # Letting $h$ be the solution to the problem
   #\[
@@ -30,4 +30,11 @@ HPDSet <- function(x, fx , alpha){
   mask <- fx>=hval
   #Return the appropriate values of x
   return(x[mask])
+}
+hpdintervalgaussian<-function(mu,sigma,alpha){
+  #Returns the endpoints of the highest posterior density alpha-credible interval
+  #for a Gaussian distribution with known mean and standard deviation
+  halfwidth <- qnorm((1-alpha)/2,0,1)
+  interval <- c(  mu+sigma*halfwidth,mu-sigma*halfwidth)
+  return(interval)
 }
