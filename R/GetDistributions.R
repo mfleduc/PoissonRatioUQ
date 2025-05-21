@@ -51,7 +51,7 @@ tgivenab <- function(a,b,m,z0,tausq,mu0=0,sigma0=Inf,uncertainty="Gaussian"){
   # params <- tgivenab(z,1,m,z0,tausq,mu0=mu0,sigma0=sigma0,uncertainty='none')
   #
   stopifnot(tolower(uncertainty)=="gaussian"||tolower(uncertainty)=="none")#What kind of uncertainty are we going to include?
-  zparams <-ZGaussian(a,b)
+  zparams <- zgaussian(a,b)
   if(tolower(uncertainty)=="gaussian"){
     muT <- 1/m*(zparams$mean-z0)
     sT <- sqrt(tausq+zparams$stdev^2)/m
