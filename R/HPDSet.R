@@ -1,3 +1,11 @@
+#' Functions for computing the highest posterior density set of a given distribution
+#'@title Highest-Posterior density
+#'@description Calculates the highest-posterior density set of an abirtrary univariate distribution given a PDF fx evaluated at points x
+#'@param x vector. x value of x at which the PDF is evaluated
+#'@param fx vector. Values of the PDF at the points in x
+#'@param alpha scalar. The desired credibility value, or the desired value of the integral of the pdf over the HPD set.
+#'@returns The values of x within the alpha-highest posterior density set
+#'@export
 hpdset <- function(x, fx , alpha){
   #Compute the HPD alpha-credible set for an arbitrary distribution.
   # Letting $h$ be the solution to the problem
@@ -31,6 +39,13 @@ hpdset <- function(x, fx , alpha){
   #Return the appropriate values of x
   return(x[mask])
 }
+#'@title Highest-Posterior density for a Gaussian distribution
+#'@description Calculates the highest-posterior density set of the univariate Gaussian with mean mu and standard deviation sigma
+#'@param mu Scalar. Mean of the Gaussian distribution
+#'@param sigma scalar. Standard deviation of the Gaussian distribution
+#'@param alpha scalar. The desired credibility value, or the desired value of the integral of the pdf over the HPD set.
+#'@returns The endpoints of the alpha-HPD interval.
+#'@export
 hpdintervalgaussian<-function(mu,sigma,alpha){
   #Returns the endpoints of the highest posterior density alpha-credible interval
   #for a Gaussian distribution with known mean and standard deviation

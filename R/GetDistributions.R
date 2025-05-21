@@ -1,3 +1,10 @@
+#' Functions for calculating distributions given data
+#' @title Calculate the distribution of Z under a Gaussian assumption
+#' @description given count datasets a and b, calculates the Gaussian approximation of the distribution of Z = \lambda_a / \lambda_b where \lambda_i is the Poisson intensity of the channel that produced dataset i
+#' @param a vector. The count data for the numerator
+#' @param b vector. The count data for the denominator
+#' @returns a list containing the mean and standard deviation of the approrpiate Gaussian
+#' @export 
 zgaussian <- function(a,b){
   # Returns the parameters of the distribution given by propagating the uncertainty in the photon counts
   #under the assumption that Z has a normal distribution
@@ -16,6 +23,14 @@ zgaussian <- function(a,b){
   param_list <- list('mean'=mu, 'stdev'=sigma_Z)
   return(param_list)
 }
+#' @title Calculate the distribution of Z under a Beta-Prime assumption
+#' @description given count datasets a and b, calculates the distribution of Z = \lambda_a / \lambda_b where \lambda_i is the Poisson intensity of the channel that produced dataset i. Under a Gamma prior for each intensity, this is a Beta-Prime distribution
+#' @param a vector. The count data for the numerator
+#' @param b vector. The count data for the denominator
+#' @param k1 scalar. The prior for the intensity of the channel generating the dataset {a}, of the form x^{-k_1}. k_1=0 is an uninformative prior, k_1=1 is scale-invariant
+#' @param k2 scalar. The prior for the intensity of the channel generating the dataset {b}, of the form x^{-k_2}. k_2=0 is an uninformative prior, k_2=1 is scale-invariant
+#' @returns a list containing the parameters of the beta-prime distribution, using the parameterization in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization
+#' @export 
 zbetaprime <-function(a,b,k1=0,k2=0){
   #Returns the parameters of the distribution given by propagating uncertainty
   #under the assumption that Z has a Beta-Prime distribution, equivalent to performing
@@ -34,6 +49,17 @@ zbetaprime <-function(a,b,k1=0,k2=0){
   param_list <- list('alpha'=alpha,'beta'=beta,'p'=p,'q'=q)
   return(param_list)
 }
+#' @title Determine the parameters of the distribution of the temperature given the data under the assumption that Z is either a point estimate or has a Gaussian distribution, and is an affine function of T
+#' @param a vector. The count data for the numerator
+#' @param b vector. The count data for the denominator
+#' @param m scalar. slope parameter of the linear regression of Z(T)
+#' @param z0 scalar. Intercept parameter of the linear regression of Z(T)
+#' @param tausq scalar. Variance of the residuals of the linear regression
+#' @param mu0 scalar. Mean of Gaussian prior for the temperature. Default is 0.
+#' @param sigma0 scalar. Standard deviation of the Gaussian prior for the temperature. Default is Inf (uninformative prior)
+#' @param uncertainty string. Either "Gaussian", in which case Z is assumed to have a Gaussian distribution determined by the function zgaussian, or "none", in which case mean(a)/mean(b) is used as a point estimate of Z. Default is "Gaussian"
+#' @returns mean and standard deviation of the distribution T|a,b with Z=mT+z0 and T\sim N(\mu_0,\sigma_0^2)
+#' @export
 tgivenab <- function(a,b,m,z0,tausq,mu0=0,sigma0=Inf,uncertainty="Gaussian"){
   # Calculate the parameters of the distribution T|a,b under the assumption that the
   # ratio Z=\lambda_a/\lambda_b either has a Gaussian distribution or is known exactly.

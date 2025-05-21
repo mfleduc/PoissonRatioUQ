@@ -21,5 +21,5 @@ pbetaprime(x, alphaparam, betaparam, p = 1, q = 1)
 The beta-prime cdf with input parameters evaluated at the locations in x. Check values, possible issues for very large alphaval or betaval parameters
 }
 \description{
-Evaluates the Beta-Prime CDF with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution )
+Evaluates the Beta-Prime CDF with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization )
 }
