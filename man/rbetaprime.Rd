@@ -21,5 +21,5 @@ rbetaprime(n, alphaparam, betaparam, p = 1, q = 1)
 A vector of length n containing draws from the desired beta-prime distribution
 }
 \description{
-generates random draws from the Beta-prime distribution with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution )
+generates random draws from the Beta-prime distribution with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization )
 }
