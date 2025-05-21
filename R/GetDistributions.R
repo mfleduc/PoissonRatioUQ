@@ -29,7 +29,7 @@ zgaussian <- function(a,b){
 #' @param b vector. The count data for the denominator
 #' @param k1 scalar. The prior for the intensity of the channel generating the dataset {a}, of the form x^{-k_1}. k_1=0 is an uninformative prior, k_1=1 is scale-invariant
 #' @param k2 scalar. The prior for the intensity of the channel generating the dataset {b}, of the form x^{-k_2}. k_2=0 is an uninformative prior, k_2=1 is scale-invariant
-#' @returns a list containing the parameters of the beta-prime distribution, using the parameterization in https://en.wikipedia.org/wiki/Beta_prime_distribution 
+#' @returns a list containing the parameters of the beta-prime distribution, using the parameterization in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization
 #' @export 
 zbetaprime <-function(a,b,k1=0,k2=0){
   #Returns the parameters of the distribution given by propagating uncertainty

@@ -2,7 +2,7 @@
 #'
 #' @title Beta-prime PDF
 #' @description
-#' Evaluates the Beta-Prime PDF with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution )
+#' Evaluates the Beta-Prime PDF with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization )
 #' @param x scalar or matrix. Values at which to evaluate the PDF
 #' @param alphaparam Scalar value, alpha parameter of the distribution
 #' @param betaparam Scalar value, beta parameter of the distribution
@@ -22,7 +22,7 @@ dbetaprime <- function( x,alphaparam,betaparam, p=1,q=1 ){
 }
 #' @title Beta-prime CDF
 #' @description
-#' Evaluates the Beta-Prime CDF with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution )
+#' Evaluates the Beta-Prime CDF with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization )
 #' @param x scalar or matrix. Values at which to evaluate the CDF
 #' @param alphaparam Scalar value, alpha parameter of the distribution
 #' @param betaparam Scalar value, beta parameter of the distribution
@@ -39,7 +39,7 @@ pbetaprime <- function(x, alphaparam,betaparam,p=1,q=1){
 }
 #' @title Beta-prime random number generator
 #' @description
-#' generates random draws from the Beta-prime distribution with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution )
+#' generates random draws from the Beta-prime distribution with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization )
 #' @param n Scalar value, number of draws from the distribution
 #' @param alphaparam Scalar value, alpha parameter of the distribution
 #' @param betaparam Scalar value, beta parameter of the distribution
