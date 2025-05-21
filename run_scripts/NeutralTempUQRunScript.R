@@ -6,28 +6,28 @@ source("/home/male7736/Desktop/Research/neutral temp estimation/PoissonRatioUQ/R
 source("/home/male7736/Desktop/Research/neutral temp estimation/PoissonRatioUQ/R/HPDSet.R")
 source("/home/male7736/Desktop/Research/neutral temp estimation/PoissonRatioUQ/R/BetaPrimeFunctions.R")
 # Parameters for the random data
-la <- 40
-lb <- 70
+la <- 50*1.25
+lb <- 78*1.25
 zhat <- la/lb
- a <- rpois(10, la)
- b <- rpois(10, lb)
+ a <- rpois(4, la)
+ b <- rpois(4, lb)
 # Calculate distributions for Z given the data
 gaussianparams <- ZGaussian(a,b)
-bpParams <- ZBetaPrime(a,b,k1=0,k2=1)
+bpParams <- ZBetaPrime(a,b,k1=0,k2=0)
 
 crpsGZ <- CRPSGaussian(gaussianparams$mean, gaussianparams$stdev, zhat)
 hpdinterval <- HPDIntervalGaussian(gaussianparams$mean, gaussianparams$stdev, 0.95)
 
-z <- seq(-3,3,0.01)
+z <- seq(-3,3,0.005)
 pdf <- dnorm(z, gaussianparams$mean, gaussianparams$stdev)
 hpdSet <- HPDSet(z, pdf, 0.95)#Returns all values of Z within the HPD credible set
 
 pdfBP <- dbetaprime(z, bpParams$alpha,bpParams$beta, bpParams$p,bpParams$q)
-bprnd <- rbetaprime(40000, bpParams$alpha,bpParams$beta,bpParams$p,bpParams$q)
+bprnd <- rbetaprime(20000, bpParams$alpha,bpParams$beta,bpParams$p,bpParams$q)
 bpcdf <-  pbetaprime(z,bpParams$alpha,bpParams$beta, bpParams$p, bpParams$q)
 #plot(z, bpcdf)
 ## Temperature estimation stuff: T|a,b
-Tvals <- seq(0,1500,by=1)
+Tvals <- seq(0,1500,by=0.5)
 m<- 0.0009
 z0 <- 0.1088
 tausq <-0.00002
