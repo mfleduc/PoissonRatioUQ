@@ -5,6 +5,8 @@ Version: 0.1.0
 Author: Matthew LeDuc
 Maintainer: Matthew LeDuc <matthew.leduc@colorado.edu>
 Description: Uncertainty quantification for problems of estimating ratios of Poisson intensity parameters, with particular extensions for operators of the form $y = mZ+b$, with Z the ratio of the intensities.
+Imports:
+    pracma
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
@@ -12,3 +14,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+RoxygenNote: 7.3.2
