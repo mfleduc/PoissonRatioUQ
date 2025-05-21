@@ -16,7 +16,7 @@ zbetaprime(a, b, k1 = 0, k2 = 0)
 \item{k2}{scalar. The prior for the intensity of the channel generating the dataset {b}, of the form x^{-k_2}. k_2=0 is an uninformative prior, k_2=1 is scale-invariant}
 }
 \value{
-a list containing the parameters of the beta-prime distribution, using the parameterization in https://en.wikipedia.org/wiki/Beta_prime_distribution
+a list containing the parameters of the beta-prime distribution, using the parameterization in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization
 }
 \description{
 given count datasets a and b, calculates the distribution of Z = \lambda_a / \lambda_b where \lambda_i is the Poisson intensity of the channel that produced dataset i. Under a Gamma prior for each intensity, this is a Beta-Prime distribution
