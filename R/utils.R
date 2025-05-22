@@ -21,7 +21,7 @@ getsza <- function(lat, lon, hourUTC, julianDay){
 #'@description Calculates the variance of each row of a matrix
 #'@param x matrix: The matrix
 #'@param na.rm BOOL: Whether of not you want NaNs removed. Default is TRUE
-#'@returns Solar zenith angle, in degrees
+#'@returns sample variance of the data in each row of the matrix
 #'@export
 rowVars <- function(x, na.rm=TRUE) {
   # Vectorised version of variance filter

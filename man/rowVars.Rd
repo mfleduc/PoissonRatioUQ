@@ -12,7 +12,7 @@ rowVars(x, na.rm = TRUE)
 \item{na.rm}{BOOL: Whether of not you want NaNs removed. Default is TRUE}
 }
 \value{
-Solar zenith angle, in degrees
+sample variance of the data in each row of the matrix
 }
 \description{
 Calculates the variance of each row of a matrix
