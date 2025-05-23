@@ -16,7 +16,7 @@ hpdset <- function(x, fx , alpha){
   #Univariate functions only, probably will work best with unimodal functions
   #First: Check normalization
   fx[is.na(fx)]<- 0
-  f <- approxfun(x, fx, method="linear", yleft=0, yright=0, rule=2)
+  # f <- approxfun(x, fx, method="linear", yleft=0, yright=0, rule=2) #Don't think this is actually necessary
   intF <- pracma::trapz(x,fx)
   fx <- fx/intF
   #Now: Find the mode

@@ -4,7 +4,7 @@
 #' @param a vector. The count data for the numerator
 #' @param b vector. The count data for the denominator
 #' @returns a list containing the mean and standard deviation of the approrpiate Gaussian
-#' @export 
+#' @export
 zgaussian <- function(a,b){
   # Returns the parameters of the distribution given by propagating the uncertainty in the photon counts
   #under the assumption that Z has a normal distribution
@@ -13,13 +13,13 @@ zgaussian <- function(a,b){
   mna <- mean(a)
   sumb <- sum(b)
   mnb <- mean(b)
-  mu <-mna/mnb #Mean of the Gaussian distribution for Z
-  sigma_a <- sqrt(suma+0.75)+1
-  sigma_b <- sqrt(sumb+0.75)+1 # Gehrels prescription to match 1-sigma distances
+  mu <- mna/mnb #Mean of the Gaussian distribution for Z
+  sigma_a <- sqrt(abs(suma)+0.75)+1
+  sigma_b <- sqrt(abs(sumb)+0.75)+1 # Gehrels prescription to match 1-sigma distances
   #btwn Poisson and Gaussian distributions
   #N. Gehrels. “Confidence limits for small numbers of events in astrophysical data”. In: The
   #Astrophysical Journal (1986)
-  sigma_Z <- mu*sqrt( sigma_a^2/suma^2+sigma_b^2/sumb^2 )
+  sigma_Z <- abs(mu)*sqrt( sigma_a^2/suma^2+sigma_b^2/sumb^2 )
   param_list <- list('mean'=mu, 'stdev'=sigma_Z)
   return(param_list)
 }
@@ -30,7 +30,7 @@ zgaussian <- function(a,b){
 #' @param k1 scalar. The prior for the intensity of the channel generating the dataset {a}, of the form x^{-k_1}. k_1=0 is an uninformative prior, k_1=1 is scale-invariant
 #' @param k2 scalar. The prior for the intensity of the channel generating the dataset {b}, of the form x^{-k_2}. k_2=0 is an uninformative prior, k_2=1 is scale-invariant
 #' @returns a list containing the parameters of the beta-prime distribution, using the parameterization in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization
-#' @export 
+#' @export
 zbetaprime <-function(a,b,k1=0,k2=0){
   #Returns the parameters of the distribution given by propagating uncertainty
   #under the assumption that Z has a Beta-Prime distribution, equivalent to performing
@@ -79,10 +79,15 @@ tgivenab <- function(a,b,m,z0,tausq,mu0=0,sigma0=Inf,uncertainty="Gaussian"){
   stopifnot(tolower(uncertainty)=="gaussian"||tolower(uncertainty)=="none")#What kind of uncertainty are we going to include?
   zparams <- zgaussian(a,b)
   if(tolower(uncertainty)=="gaussian"){
-    muT <- 1/m*(zparams$mean-z0)
-    sT <- sqrt(tausq+zparams$stdev^2)/m
-    stdev <- 1/sqrt(1/sigma0^2+1/sT^2)
-    mn <- (stdev)^2*(mu0/sigma0^2+muT/sT^2)
+    # muT <- 1/m*(zparams$mean-z0)
+    # sT <- sqrt(tausq+zparams$stdev^2)/m
+    # stdev <- 1/sqrt(1/sigma0^2+1/sT^2)
+    # mn <- (stdev)^2*(mu0/sigma0^2+muT/sT^2)
+    sT <- 1/sqrt(1/sigma0^2+m^2/tausq)
+    variance <- sT^2*(sT^2*zparams$stdev^2*m^2+tausq^2)/tausq^2
+    stdev <- sqrt(variance)
+    mn <- sT^2*(mu0/sigma0^2+m/tausq*(zparams$mean-z0))
+
   }else if(tolower(uncertainty)=="none"){
     stdev <- 1/sqrt(1/sigma0^2+m^2/tausq);
     mn <- (stdev)^2*(mu0/sigma0^2+m/tausq*(zparams$mean-z0))
