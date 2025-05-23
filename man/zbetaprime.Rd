@@ -4,20 +4,24 @@
 \alias{zbetaprime}
 \title{Calculate the distribution of Z under a Beta-Prime assumption}
 \usage{
-zbetaprime(a, b, k1 = 0, k2 = 0)
+zbetaprime(a, b, a1 = 1, a2 = 1, b1 = 0, b2 = 0)
 }
 \arguments{
 \item{a}{vector. The count data for the numerator}
 
 \item{b}{vector. The count data for the denominator}
 
-\item{k1}{scalar. The prior for the intensity of the channel generating the dataset {a}, of the form x^{-k_1}. k_1=0 is an uninformative prior, k_1=1 is scale-invariant}
+\item{a1}{scalar. The shape parameter of the Gamma prior for the upper channel. Default is 1.}
 
-\item{k2}{scalar. The prior for the intensity of the channel generating the dataset {b}, of the form x^{-k_2}. k_2=0 is an uninformative prior, k_2=1 is scale-invariant}
+\item{a2}{scalar. The shape parameter of the Gamma prior for the lower channel. Default is 1.}
+
+\item{b1}{scalar. The rate parameter of the Gamma prior for the upper channel. Default is 0.}
+
+\item{b2}{scalar. The rate parameter of the Gamma prior for the lower channel. Default is 0.}
 }
 \value{
 a list containing the parameters of the beta-prime distribution, using the parameterization in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization
 }
 \description{
-given count datasets a and b, calculates the distribution of Z = \lambda_a / \lambda_b where \lambda_i is the Poisson intensity of the channel that produced dataset i. Under a Gamma prior for each intensity, this is a Beta-Prime distribution
+given count datasets a and b, calculates the distribution of Z = \lambda_a / \lambda_b where \lambda_i is the Poisson intensity of the channel that produced dataset i. Under a Gamma prior for each intensity, this is a Beta-Prime distribution. The Gamma pdf uses the shape/rate parameterization and the default prior is uninformative. A prior of the form x^-k_i can be obtained by setting ai=1-ki and bi=0
 }

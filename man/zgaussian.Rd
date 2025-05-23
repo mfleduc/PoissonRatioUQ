@@ -12,10 +12,12 @@ zgaussian(a, b)
 \item{b}{vector. The count data for the denominator}
 }
 \value{
-a list containing the mean and standard deviation of the approrpiate Gaussian
+a list containing the mean and standard deviation of the appropriate Gaussian
 }
 \description{
-given count datasets a and b, calculates the Gaussian approximation of the distribution of Z = \lambda_a / \lambda_b where \lambda_i is the Poisson intensity of the channel that produced dataset i
+given count datasets a and b, calculates the Gaussian approximation of the distribution of Z = \lambda_a / \lambda_b where \lambda_i is the Poisson intensity of the channel that produced dataset i. Some details are available in (Park, T., Kashyap, V. L., Siemiginowska, A., van Dyk, D. A., Zezas, A., Heinke, C., and Wargelin, B. J.: Bayesian Estimation of Hardness
+Ratios: Modeling and Computations, In: The
+Astrophysical Journal, 2006) and (Gehrels, N.: Confidence limits for small numbers of events in astrophysical data, The Astrophysical Journal, 1986.)
 }
 \details{
 Functions for calculating distributions given data
