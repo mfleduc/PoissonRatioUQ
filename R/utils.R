@@ -17,3 +17,16 @@ getsza <- function(lat, lon, hourUTC, julianDay){
   cossza <- sin(lat)*sin(delta)+cos(lat)*cos(delta)*cos(h)
   return(acosd(cossza))
 }
+#'@title Row variances
+#'@description Calculates the variance of each row of a matrix
+#'@param x matrix: The matrix
+#'@param na.rm BOOL: Whether of not you want NaNs removed. Default is TRUE
+#'@returns sample variance of the data in each row of the matrix
+#'@export
+rowVars <- function(x, na.rm=TRUE) {
+  # Vectorised version of variance filter
+  rowSums((x - rowMeans(x, na.rm=na.rm))^2, na.rm=na.rm) / (ncol(x) - 1)
+}
+
+
+

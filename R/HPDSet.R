@@ -16,7 +16,7 @@ hpdset <- function(x, fx , alpha){
   #Univariate functions only, probably will work best with unimodal functions
   #First: Check normalization
   fx[is.na(fx)]<- 0
-  f <- approxfun(x, fx, method="linear", yleft=0, yright=0, rule=2)
+  # f <- approxfun(x, fx, method="linear", yleft=0, yright=0, rule=2) #Don't think this is actually necessary
   intF <- pracma::trapz(x,fx)
   fx <- fx/intF
   #Now: Find the mode
@@ -33,7 +33,7 @@ hpdset <- function(x, fx , alpha){
     return(intVal-alpha)
   }
   #Do rootfinding
-  rootfind <-uniroot(GetCredibleSet, c(0, modefx/1.05), tol=10^-12)
+  rootfind <-uniroot(GetCredibleSet, c(0, modefx ), tol=10^-12)
   hval<- rootfind$root
   mask <- fx>=hval
   #Return the appropriate values of x
@@ -49,7 +49,7 @@ hpdset <- function(x, fx , alpha){
 hpdintervalgaussian<-function(mu,sigma,alpha){
   #Returns the endpoints of the highest posterior density alpha-credible interval
   #for a Gaussian distribution with known mean and standard deviation
-  halfwidth <- qnorm((1-alpha)/2,0,1)
+  halfwidth <- qnorm((1-alpha)/2,0,1) #Note: Halfwidth <0!!!!!
   interval <- c(  mu+sigma*halfwidth,mu-sigma*halfwidth)
   return(interval)
 }
