@@ -1,6 +1,6 @@
 #' Functions for calculating distributions given data
 #' @title Calculate the distribution of Z under a Gaussian assumption
-#' @description given count datasets a and b, calculates the Gaussian approximation of the distribution of Z = \lambda_a / \lambda_b where \lambda_i is the Poisson intensity of the channel that produced dataset i. Some details are available in (Park, T., Kashyap, V. L., Siemiginowska, A., van Dyk, D. A., Zezas, A., Heinke, C., and Wargelin, B. J.: Bayesian Estimation of Hardness
+#' @description given count datasets a and b, calculates the Gaussian approximation of the distribution of Z = lambda_a / lambda_b where lambda_i is the Poisson intensity of the channel that produced dataset i. Some details are available in (Park, T., Kashyap, V. L., Siemiginowska, A., van Dyk, D. A., Zezas, A., Heinke, C., and Wargelin, B. J.: Bayesian Estimation of Hardness
 #' Ratios: Modeling and Computations, In: The
 #' Astrophysical Journal, 2006) and (Gehrels, N.: Confidence limits for small numbers of events in astrophysical data, The Astrophysical Journal, 1986.)
 #' @param a vector. The count data for the numerator
@@ -26,7 +26,7 @@ zgaussian <- function(a,b){
   return(param_list)
 }
 #' @title Calculate the distribution of Z under a Beta-Prime assumption
-#' @description given count datasets a and b, calculates the distribution of Z = \lambda_a / \lambda_b where \lambda_i is the Poisson intensity of the channel that produced dataset i. Under a Gamma prior for each intensity, this is a Beta-Prime distribution. The Gamma pdf uses the shape/rate parameterization and the default prior is uninformative. A prior of the form x^-k_i can be obtained by setting ai=1-ki and bi=0
+#' @description given count datasets a and b, calculates the distribution of Z = lambda_a / lambda_b where lambda_i is the Poisson intensity of the channel that produced dataset i. Under a Gamma prior for each intensity, this is a Beta-Prime distribution. The Gamma pdf uses the shape/rate parameterization and the default prior is uninformative. A prior of the form x^-k_i can be obtained by setting ai=1-ki and bi=0
 #' @param a vector. The count data for the numerator
 #' @param b vector. The count data for the denominator
 #' @param a1 scalar. The shape parameter of the Gamma prior for the upper channel. Default is 1.
@@ -62,11 +62,11 @@ zbetaprime <-function(a,b,a1=1,a2=1,b1=0,b2=0){
 #' @param mu0 scalar. Mean of Gaussian prior for the temperature. Default is 0.
 #' @param sigma0 scalar. Standard deviation of the Gaussian prior for the temperature. Default is Inf (uninformative prior)
 #' @param uncertainty string. Either "Gaussian", in which case Z is assumed to have a Gaussian distribution determined by the function zgaussian, or "none", in which case mean(a)/mean(b) is used as a point estimate of Z. Default is "Gaussian"
-#' @returns mean and standard deviation of the distribution T|a,b with Z=mT+z0 and T\sim N(\mu_0,\sigma_0^2)
+#' @returns mean and standard deviation of the distribution T|a,b with Z=mT+z0 and T ~ N(mu0,sigma0^2)
 #' @export
 tgivenab <- function(a,b,m,z0,tausq,mu0=0,sigma0=Inf,uncertainty="Gaussian"){
   # Calculate the parameters of the distribution T|a,b under the assumption that the
-  # ratio Z=\lambda_a/\lambda_b either has a Gaussian distribution or is known exactly.
+  # ratio Z=lambda_a/lambda_b either has a Gaussian distribution or is known exactly.
   # a and b are the data for the upper and lower channels respectively.
   # Additional assumption that Z|T \sim N(mT+z_0,tausq) and that the prior for T is
   # N(mu0,sigma0^2). These parameters are optional.

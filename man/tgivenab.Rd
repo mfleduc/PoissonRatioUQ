@@ -24,7 +24,7 @@ tgivenab(a, b, m, z0, tausq, mu0 = 0, sigma0 = Inf, uncertainty = "Gaussian")
 \item{uncertainty}{string. Either "Gaussian", in which case Z is assumed to have a Gaussian distribution determined by the function zgaussian, or "none", in which case mean(a)/mean(b) is used as a point estimate of Z. Default is "Gaussian"}
 }
 \value{
-mean and standard deviation of the distribution T|a,b with Z=mT+z0 and T\sim N(\mu_0,\sigma_0^2)
+mean and standard deviation of the distribution T|a,b with Z=mT+z0 and T ~ N(mu0,sigma0^2)
 }
 \description{
 Determine the parameters of the distribution of the temperature given the data under the assumption that Z is either a point estimate or has a Gaussian distribution, and is an affine function of T
