@@ -1,1 +1,0 @@
-README file for the data directory describing whatever data will end up in here. To be continued.
