@@ -7,20 +7,20 @@
 zbetaprime(a, b, a1 = 1, a2 = 1, b1 = 0, b2 = 0)
 }
 \arguments{
-\item{a}{vector. The count data for the numerator}
+\item{a}{Matrix. The count data for the numerator. Rows correspond to spatial locations, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. Missing data should be replaced by NaNs.}
 
-\item{b}{vector. The count data for the denominator}
+\item{b}{Matrix. The count data for the denominator. Rows correspond to spatial locations, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. Missing data should be replaced by NaNs.}
 
-\item{a1}{scalar. The shape parameter of the Gamma prior for the upper channel. Default is 1.}
+\item{a1}{Vector or scalar. The shape parameter of the Gamma prior for the upper channel. If a vector, must have the same number of entries as rows in a and b. Default is 1.}
 
-\item{a2}{scalar. The shape parameter of the Gamma prior for the lower channel. Default is 1.}
+\item{a2}{Vector or scalar. The shape parameter of the Gamma prior for the lower channel. If a vector, must have the same number of entries as rows in a and b. Default is 1.}
 
-\item{b1}{scalar. The rate parameter of the Gamma prior for the upper channel. Default is 0.}
+\item{b1}{Vector or scalar. The rate parameter of the Gamma prior for the upper channel. If a vector, must have the same number of entries as rows in a and b. Default is 0.}
 
-\item{b2}{scalar. The rate parameter of the Gamma prior for the lower channel. Default is 0.}
+\item{b2}{Vector or scalar. The rate parameter of the Gamma prior for the lower channel. If a vector, must have the same number of entries as rows in a and b. Default is 0.}
 }
 \value{
-a list containing the parameters of the beta-prime distribution, using the parameterization in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization
+a list containing the parameters of the beta-prime distributions at each spatial location, using the parameterization in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization
 }
 \description{
 given count datasets a and b, calculates the distribution of Z = lambda_a / lambda_b where lambda_i is the Poisson intensity of the channel that produced dataset i. Under a Gamma prior for each intensity, this is a Beta-Prime distribution. The Gamma pdf uses the shape/rate parameterization and the default prior is uninformative. A prior of the form x^-k_i can be obtained by setting ai=1-ki and bi=0
