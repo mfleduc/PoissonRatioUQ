@@ -62,7 +62,7 @@ zbetaprime <-function(a,b,a1=1,a2=1,b1=0,b2=0){
 #' @param priormn scalar or vector. Mean of Gaussian prior for the temperature. Default is 0.
 #' @param priorvar scalar or matrix. variance of the Gaussian prior for the temperature. Default is Inf (uninformative prior).
 #' @param uncertainty string. Either "Gaussian", in which case Z is assumed to have a Gaussian distribution determined by the function zgaussian, or "none", in which case mean(a)/mean(b) is used as a point estimate of Z. Default is "Gaussian"
-#' @returns mean and standard deviation of the distribution T|a,b with Z=mT+z0 and T ~ N(mu0,sigma0^2). In the future when more spatial structure is allowed this will return a mean and covariance matrix.
+#' @returns mean and standard deviation of the distribution T|a,b with Z=mT+z0, T|Z ~ N((a/b-z0)/m, tau^2/m), Z|a,b from zgaussian(), and T ~ N(mu0,Sigma0) where mu0 is the prior mean and Sigma0 the prior covariance matrix.
 #' @export
 tgivenab <- function(a,b,m,z0,tausq,priormn=0,priorvar=Inf,uncertainty="Gaussian"){
   # Calculate the parameters of the distribution T|a,b under the assumption that the

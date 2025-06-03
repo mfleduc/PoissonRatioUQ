@@ -33,7 +33,7 @@ tgivenab(
 \item{uncertainty}{string. Either "Gaussian", in which case Z is assumed to have a Gaussian distribution determined by the function zgaussian, or "none", in which case mean(a)/mean(b) is used as a point estimate of Z. Default is "Gaussian"}
 }
 \value{
-mean and standard deviation of the distribution T|a,b with Z=mT+z0 and T ~ N(mu0,sigma0^2). In the future when more spatial structure is allowed this will return a mean and covariance matrix.
+mean and standard deviation of the distribution T|a,b with Z=mT+z0, T|Z ~ N((a/b-z0)/m, tau^2/m), Z|a,b from zgaussian(), and T ~ N(mu0,Sigma0) where mu0 is the prior mean and Sigma0 the prior covariance matrix.
 }
 \description{
 Determine the parameters of the distribution of the temperature given the data under the assumption that Z is either a point estimate or has a Gaussian distribution, and is an affine function of T
