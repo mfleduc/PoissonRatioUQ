@@ -2,6 +2,7 @@
 
 export(CRPS)
 export(CRPSgaussian)
+export(binarray)
 export(dbetaprime)
 export(getsza)
 export(hpdintervalgaussian)
