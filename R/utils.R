@@ -27,6 +27,29 @@ rowVars <- function(x, na.rm=TRUE) {
   # Vectorised version of variance filter
   rowSums((x - rowMeans(x, na.rm=na.rm))^2, na.rm=na.rm) / (ncol(x) - 1)
 }
-
+#'@title Bin arrays into blocks
+#'@description Takes a 2D array and divides it into blocks of constant size. Probably not the fastest possible implementation, but for now this is what we are doing.
+#'@param x matrix/array: The matrix to divide into blocks
+#'@param blocksize vector: dimensions of the blocks
+#'@param reshapeTo2D Bool: Flag to set to TRUE if instead of wanting an output array of dimension nxmxk, you want the output to be dimension (nm)xk, i.e. you want to flatten the blocks. Default FALSE
+#'@returns array blocked into chunks of the desired size
+#'@export
+binarray <- function(x, blocksize=c(2,2),reshapeTo2D=FALSE){
+  # bin a 2x2 array into predefined blocks
+  nblocks <- prod(dim(x))/prod(blocksize)
+  stopifnot("Must be an integer number of blocks"=nblocks==ceiling(nblocks) )
+  binnedx <- array(NaN, dim=append(blocksize, nblocks))
+  counter <-0
+  for(ii in seq(1, dim(x)[1],by=blocksize[1])){
+    for(jj in seq(1, dim(x)[1],by=blocksize[1])){
+      counter<-counter+1
+      binnedx[,,counter] <- x[ii:(ii+blocksize[1]-1),jj:(jj+blocksize[2]-1)]
+    }
+  }
+  if(reshapeTo2D){
+    dim(binnedx)<-c(prod(blocksize),nblocks)
+  }
+  return(binnedx)
+}
 
 
