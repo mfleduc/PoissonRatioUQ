@@ -4,27 +4,36 @@
 \alias{tgivenab}
 \title{Determine the parameters of the distribution of the temperature given the data under the assumption that Z is either a point estimate or has a Gaussian distribution, and is an affine function of T}
 \usage{
-tgivenab(a, b, m, z0, tausq, mu0 = 0, sigma0 = Inf, uncertainty = "Gaussian")
+tgivenab(
+  a,
+  b,
+  m,
+  z0,
+  tausq,
+  priormn = 0,
+  priorvar = Inf,
+  uncertainty = "Gaussian"
+)
 }
 \arguments{
-\item{a}{vector. The count data for the numerator}
+\item{a}{Matrix. The count data for the numerator. Rows correspond to spatial locations, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. MUST be a matrix or array right now, if you want a scalar use a 1x1 array. Missing data should be replaced by NaNs.}
 
-\item{b}{vector. The count data for the denominator}
+\item{b}{Matrix. The count data for the denominator. Rows correspond to spatial locations, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. MUST be a matrix or array right now, if you want a scalar use a 1x1 array. Missing data should be replaced by NaNs.}
 
-\item{m}{scalar. slope parameter of the linear regression of Z(T)}
+\item{m}{scalar. slope parameter of the linear regression of Z(T). Must be a scalar for now, will be generalized to a vector in the future. Right now vectors should work but have not been tested.}
 
-\item{z0}{scalar. Intercept parameter of the linear regression of Z(T)}
+\item{z0}{scalar. Intercept parameter of the linear regression of Z(T). Must be a scalar for now, will be generalized to a vector in the future. Right now vectors should work but have not been tested.}
 
-\item{tausq}{scalar. Variance of the residuals of the linear regression}
+\item{tausq}{scalar. Variance of the residuals of the linear regression. Must be a scalar for now, will be generalized to a vector in the future. Right now vectors should work but have not been tested.}
 
-\item{mu0}{scalar. Mean of Gaussian prior for the temperature. Default is 0.}
+\item{priormn}{scalar or vector. Mean of Gaussian prior for the temperature. Default is 0.}
 
-\item{sigma0}{scalar. Standard deviation of the Gaussian prior for the temperature. Default is Inf (uninformative prior)}
+\item{priorvar}{scalar or matrix. variance of the Gaussian prior for the temperature. Default is Inf (uninformative prior).}
 
 \item{uncertainty}{string. Either "Gaussian", in which case Z is assumed to have a Gaussian distribution determined by the function zgaussian, or "none", in which case mean(a)/mean(b) is used as a point estimate of Z. Default is "Gaussian"}
 }
 \value{
-mean and standard deviation of the distribution T|a,b with Z=mT+z0 and T ~ N(mu0,sigma0^2)
+mean and standard deviation of the distribution T|a,b with Z=mT+z0, T|Z ~ N((a/b-z0)/m, tau^2/m), Z|a,b from zgaussian(), and T ~ N(mu0,Sigma0) where mu0 is the prior mean and Sigma0 the prior covariance matrix.
 }
 \description{
 Determine the parameters of the distribution of the temperature given the data under the assumption that Z is either a point estimate or has a Gaussian distribution, and is an affine function of T
