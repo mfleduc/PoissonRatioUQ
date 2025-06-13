@@ -1,3 +1,4 @@
 *.nc
 run_scripts/*
 data/*
+.Rproj.user

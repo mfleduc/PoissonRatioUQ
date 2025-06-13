@@ -7,12 +7,13 @@
 tgivenab(
   a,
   b,
-  m,
-  z0,
-  tausq,
+  M,
+  Z0,
+  TauSq,
   priormn = 0,
   priorvar = Inf,
-  uncertainty = "Gaussian"
+  uncertainty = "Gaussian",
+  spectralAveraging = FALSE
 )
 }
 \arguments{
@@ -20,11 +21,11 @@ tgivenab(
 
 \item{b}{Matrix. The count data for the denominator. Rows correspond to spatial locations, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. MUST be a matrix or array right now, if you want a scalar use a 1x1 array. Missing data should be replaced by NaNs.}
 
-\item{m}{scalar. slope parameter of the linear regression of Z(T). Must be a scalar for now, will be generalized to a vector in the future. Right now vectors should work but have not been tested.}
+\item{M}{scalar or matrix. slope parameter of the linear regression of Z(T).}
 
-\item{z0}{scalar. Intercept parameter of the linear regression of Z(T). Must be a scalar for now, will be generalized to a vector in the future. Right now vectors should work but have not been tested.}
+\item{Z0}{scalar or vector. Intercept parameter of the linear regression of Z(T).}
 
-\item{tausq}{scalar. Variance of the residuals of the linear regression. Must be a scalar for now, will be generalized to a vector in the future. Right now vectors should work but have not been tested.}
+\item{TauSq}{scalar or matrix. Covariance matrix of the residuals of the linear regression.}
 
 \item{priormn}{scalar or vector. Mean of Gaussian prior for the temperature. Default is 0.}
 
@@ -36,5 +37,5 @@ tgivenab(
 mean and standard deviation of the distribution T|a,b with Z=mT+z0, T|Z ~ N((a/b-z0)/m, tau^2/m), Z|a,b from zgaussian(), and T ~ N(mu0,Sigma0) where mu0 is the prior mean and Sigma0 the prior covariance matrix.
 }
 \description{
-Determine the parameters of the distribution of the temperature given the data under the assumption that Z is either a point estimate or has a Gaussian distribution, and is an affine function of T
+Given count data, a prior, and the parameters of the distribution Z|T ~N(mT+z0,tausq) determines the distribution of T|data under the assumption that the counts are either Gaussian or provide a point estimate of Z.
 }

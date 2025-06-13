@@ -15,7 +15,7 @@ zgaussian(a, b)
 a list containing the means and standard deviations of the appropriate Gaussians.
 }
 \description{
-given count datasets a and b, calculates the Gaussian approximation of the distribution of Z = lambda_a / lambda_b where lambda_i is the Poisson intensity of the channel that produced dataset i. Some details are available in (Park, T., Kashyap, V. L., Siemiginowska, A., van Dyk, D. A., Zezas, A., Heinke, C., and Wargelin, B. J.: Bayesian Estimation of Hardness
+given count datasets a and b, calculates the Gaussian approximation of the distribution of Z = lambda_a / lambda_b, where lambda_i is the Poisson intensity of the channel that produced dataset i, using the delta method. Some details are available in (Park, T., Kashyap, V. L., Siemiginowska, A., van Dyk, D. A., Zezas, A., Heinke, C., and Wargelin, B. J.: Bayesian Estimation of Hardness
 Ratios: Modeling and Computations, In: The
 Astrophysical Journal, 2006) and (Gehrels, N.: Confidence limits for small numbers of events in astrophysical data, The Astrophysical Journal, 1986.). This model assumes that realizations at different spatial locations are independent!
 }
