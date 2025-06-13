@@ -12,8 +12,7 @@ tgivenab(
   TauSq,
   priormn = 0,
   priorvar = Inf,
-  uncertainty = "Gaussian",
-  spectralAveraging = FALSE
+  uncertainty = "Gaussian"
 )
 }
 \arguments{
