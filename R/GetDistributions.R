@@ -1,6 +1,6 @@
 #' Functions for calculating distributions given data
 #' @title Calculate the distribution of Z under a Gaussian assumption
-#' @description given count datasets a and b, calculates the Gaussian approximation of the distribution of Z = lambda_a / lambda_b where lambda_i is the Poisson intensity of the channel that produced dataset i. Some details are available in (Park, T., Kashyap, V. L., Siemiginowska, A., van Dyk, D. A., Zezas, A., Heinke, C., and Wargelin, B. J.: Bayesian Estimation of Hardness
+#' @description given count datasets a and b, calculates the Gaussian approximation of the distribution of Z = lambda_a / lambda_b, where lambda_i is the Poisson intensity of the channel that produced dataset i, using the delta method. Some details are available in (Park, T., Kashyap, V. L., Siemiginowska, A., van Dyk, D. A., Zezas, A., Heinke, C., and Wargelin, B. J.: Bayesian Estimation of Hardness
 #' Ratios: Modeling and Computations, In: The
 #' Astrophysical Journal, 2006) and (Gehrels, N.: Confidence limits for small numbers of events in astrophysical data, The Astrophysical Journal, 1986.). This model assumes that realizations at different spatial locations are independent!
 #' @param a Matrix. The count data for the numerator. Rows correspond to spatial locations, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. MUST be a matrix or array right now, if you want a scalar use a 1x1 array. Missing data should be replaced by NaNs.
@@ -54,17 +54,18 @@ zbetaprime <-function(a,b,a1=1,a2=1,b1=0,b2=0){
   return(param_list)
 }
 #' @title Determine the parameters of the distribution of the temperature given the data under the assumption that Z is either a point estimate or has a Gaussian distribution, and is an affine function of T
+#' @description Given count data, a prior, and the parameters of the distribution Z|T ~N(mT+z0,tausq) determines the distribution of T|data under the assumption that the counts are either Gaussian or provide a point estimate of Z.
 #' @param a Matrix. The count data for the numerator. Rows correspond to spatial locations, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. MUST be a matrix or array right now, if you want a scalar use a 1x1 array. Missing data should be replaced by NaNs.
 #' @param b Matrix. The count data for the denominator. Rows correspond to spatial locations, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. MUST be a matrix or array right now, if you want a scalar use a 1x1 array. Missing data should be replaced by NaNs.
-#' @param m scalar. slope parameter of the linear regression of Z(T). Must be a scalar for now, will be generalized to a vector in the future. Right now vectors should work but have not been tested.
-#' @param z0 scalar. Intercept parameter of the linear regression of Z(T). Must be a scalar for now, will be generalized to a vector in the future. Right now vectors should work but have not been tested.
-#' @param tausq scalar. Variance of the residuals of the linear regression. Must be a scalar for now, will be generalized to a vector in the future. Right now vectors should work but have not been tested.
+#' @param M scalar or matrix. slope parameter of the linear regression of Z(T).
+#' @param Z0 scalar or vector. Intercept parameter of the linear regression of Z(T).
+#' @param TauSq scalar or matrix. Covariance matrix of the residuals of the linear regression.
 #' @param priormn scalar or vector. Mean of Gaussian prior for the temperature. Default is 0.
 #' @param priorvar scalar or matrix. variance of the Gaussian prior for the temperature. Default is Inf (uninformative prior).
 #' @param uncertainty string. Either "Gaussian", in which case Z is assumed to have a Gaussian distribution determined by the function zgaussian, or "none", in which case mean(a)/mean(b) is used as a point estimate of Z. Default is "Gaussian"
 #' @returns mean and standard deviation of the distribution T|a,b with Z=mT+z0, T|Z ~ N((a/b-z0)/m, tau^2/m), Z|a,b from zgaussian(), and T ~ N(mu0,Sigma0) where mu0 is the prior mean and Sigma0 the prior covariance matrix.
 #' @export
-tgivenab <- function(a,b,m,z0,tausq,priormn=0,priorvar=Inf,uncertainty="Gaussian"){
+tgivenab <- function(a,b,M,Z0,TauSq,priormn=0,priorvar=Inf,uncertainty="Gaussian",spectralAveraging=FALSE){
   # Calculate the parameters of the distribution T|a,b under the assumption that the
   # ratio Z=lambda_a/lambda_b either has a Gaussian distribution or is known exactly.
   # a and b are the data for the upper and lower channels respectively.
@@ -83,18 +84,29 @@ tgivenab <- function(a,b,m,z0,tausq,priormn=0,priorvar=Inf,uncertainty="Gaussian
   stopifnot(tolower(uncertainty)=="gaussian"||tolower(uncertainty)=="none")#What kind of uncertainty are we going to include?
   includeprior <- all(is.finite(priorvar))
   zparams <- zgaussian(a,b)
-  nSpatial <- dim(a)[1] #Expanding into a spatial model
-  M <- TauSq <- TauSqInv <- diag(nSpatial)
-  diag(M) <- m
-  Z0 <-  matrix(z0,nrow=nSpatial,ncol=1)
-  diag(TauSq) <- tausq
-  diag(TauSqInv) <- (1/tausq)
+  if(length(M)==1){
+    nSpatial <- dim(a)[1] #Expanding into a spatial model
+    M <- diag(nSpatial)*M
+  }else if(min(dim(M))==1){
+    M <- diag(M)
+    nSpatial <- dim(M)[1]
+  }else{
+    nSpatial <- dim(M)[2]
+  }
+  if(length(Z0)==1){
+    Z0 <- matrix(z0,nrows=dim(a)[1],ncol=1)
+  }
+  if(length(TauSq)==1){
+    TauSq <- eye(dim(a)[1])*TauSq
+  }
+  TauSqInv <- solve(TauSq)
   if(length(priormn)==1){
     priormn <- matrix(priormn,nrow=nSpatial,ncol=1)
   }
   if(length(priorvar)==1&includeprior){
     priorvar <- diag(nSpatial)*priorvar
   }
+  MtTsInv <- t(M)%*%TauSqInv
   if(tolower(uncertainty)=="gaussian"){
     # muT <- 1/m*(zparams$mean-z0)
     # sT <- sqrt(tausq+zparams$stdev^2)/m
@@ -105,27 +117,31 @@ tgivenab <- function(a,b,m,z0,tausq,priormn=0,priorvar=Inf,uncertainty="Gaussian
     # stdev <- sqrt(variance)
     # mn <- sT^2*(priormn/priorvar+m/tausq*(zparams$mean-z0))
     if(includeprior){
-      SigmaT <- solve(solve(priorvar)+M%*%(TauSqInv%*%M))
-      mn <- SigmaT%*%(solve(priorvar, priormn)+(TauSqInv%*%M%*%(zparams$mean-Z0)))
-      SigmaZ <- diag(nSpatial)
-      diag(SigmaZ) <- zparams$stdev^2
-      cov <- SigmaT + SigmaT%*%M%*%TauSqInv%*%SigmaZ%*%TauSqInv%*%M%*%SigmaT
+      priorvarinv <- solve(priorvar)
+      SigmaT <- solve(priorvarinv+MtTsInv%*%M)
+      mn <- SigmaT%*%(priorvarinv%*%priormn+(MtTsInv%*%(zparams$mean-Z0)))
+      SigmaZsqrt <- diag(zparams$stdev)
+      H <- SigmaT%*%MtTsInv%*%SigmaZsqrt
+      cov <- SigmaT + H%*%t(H)
     }else{
-      SigmaT <- solve(M%*%(TauSqInv%*%M))
-      mn <- SigmaT%*%((TauSqInv%*%M%*%(zparams$mean-Z0)))
-      SigmaZ <- diag(nSpatial)
-      diag(SigmaZ) <- zparams$stdev^2
-      cov <- SigmaT + SigmaT%*%M%*%TauSqInv%*%SigmaZ%*%TauSqInv%*%M%*%SigmaT
+      SigmaT <- solve(MtTsInv%*%M)
+      mn <- SigmaT%*%(MtTsInv%*%(zparams$mean-Z0))
+      SigmaZsqrt <- diag(zparams$stdev)
+      H <- SigmaT%*%MtTsInv%*%SigmaZsqrt
+      cov <- SigmaT + H%*%t(H)
     }
   }else if(tolower(uncertainty)=="none"){
     # stdev <- 1/sqrt(1/priorvar+m^2/tausq);
     if(includeprior){
-      cov <- solve(solve(priorvar)+M%*%(TauSqInv%*%M))
-      mn <- cov%*%(solve(priorvar, priormn)+(TauSqInv%*%M%*%(zparams$mean-Z0)))
+      priorvarinv <- solve(priorvar)
+      cov <- solve(priorvarinv+MtTsInv%*%M)
+      mn <- cov%*%(priorvarinv%*%priormn+MtTsInv%*%(zparams$mean-Z0))
     }else{
-      cov <- solve(M%*%(TauSqInv%*%M))
-      mn <- cov%*%((TauSqInv%*%M%*%(zparams$mean-Z0)))
+      cov <- solve(MtTsInv%*%M)
+      mn <- cov%*%(MtTsInv%*%(zparams$mean-Z0))
     }
   }
   param_list<-list('mean'=mn,'cov'=cov)
+  return(param_list)
+
 }
