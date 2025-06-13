@@ -65,7 +65,7 @@ zbetaprime <-function(a,b,a1=1,a2=1,b1=0,b2=0){
 #' @param uncertainty string. Either "Gaussian", in which case Z is assumed to have a Gaussian distribution determined by the function zgaussian, or "none", in which case mean(a)/mean(b) is used as a point estimate of Z. Default is "Gaussian"
 #' @returns mean and standard deviation of the distribution T|a,b with Z=mT+z0, T|Z ~ N((a/b-z0)/m, tau^2/m), Z|a,b from zgaussian(), and T ~ N(mu0,Sigma0) where mu0 is the prior mean and Sigma0 the prior covariance matrix.
 #' @export
-tgivenab <- function(a,b,M,Z0,TauSq,priormn=0,priorvar=Inf,uncertainty="Gaussian",spectralAveraging=FALSE){
+tgivenab <- function(a,b,M,Z0,TauSq,priormn=0,priorvar=Inf,uncertainty="Gaussian"){
   # Calculate the parameters of the distribution T|a,b under the assumption that the
   # ratio Z=lambda_a/lambda_b either has a Gaussian distribution or is known exactly.
   # a and b are the data for the upper and lower channels respectively.
