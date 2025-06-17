@@ -41,7 +41,7 @@ binarray <- function(x, blocksize=c(2,2),reshapeTo2D=FALSE){
   binnedx <- array(NaN, dim=append(blocksize, nblocks))
   counter <-0
   for(ii in seq(1, dim(x)[1],by=blocksize[1])){
-    for(jj in seq(1, dim(x)[1],by=blocksize[1])){
+    for(jj in seq(1, dim(x)[2],by=blocksize[2])){
       counter<-counter+1
       binnedx[,,counter] <- x[ii:(ii+blocksize[1]-1),jj:(jj+blocksize[2]-1)]
     }
