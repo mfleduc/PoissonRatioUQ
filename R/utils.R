@@ -40,8 +40,8 @@ binarray <- function(x, blocksize=c(2,2),reshapeTo2D=FALSE){
   stopifnot("Must be an integer number of blocks"=nblocks==ceiling(nblocks) )
   binnedx <- array(NaN, dim=append(blocksize, nblocks))
   counter <-0
-  for(ii in seq(1, dim(x)[1],by=blocksize[1])){
-    for(jj in seq(1, dim(x)[2],by=blocksize[2])){
+  for(ii in seq(1, dim(x)[1]-1,by=blocksize[1])){
+    for(jj in seq(1, dim(x)[2]-1,by=blocksize[2])){
       counter<-counter+1
       binnedx[,,counter] <- x[ii:(ii+blocksize[1]-1),jj:(jj+blocksize[2]-1)]
     }
@@ -51,5 +51,19 @@ binarray <- function(x, blocksize=c(2,2),reshapeTo2D=FALSE){
   }
   return(binnedx)
 }
+#'@title Gaussian smoother
+#'@description Applies a Gaussian smoother with width sigma to the input data
+#'@param sigma scalar: Width of the Gaussian smoother
+#'@returns Smoothed data
+#'@export
+gausssmooth <- function( data, sigma ){
+  n <- length(data)
+  winsize <- ceiling(5*sigma)
+  winhalf <-  ceiling(winsize/2)
+  win <- exp( -0.5*(  1:winsize - ceiling(winsize/2) )^2/sigma^2 )
+  win <- win/sum(win)
+  smootheddata <- filter(  data, win, method="convolution"  )
 
 
+
+}
