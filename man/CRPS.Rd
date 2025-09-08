@@ -17,7 +17,7 @@ CRPS(x, pdf = NULL, cdf = NULL, xhat = NULL)
 }
 \value{
 The continuous rank probability score for the predictive model given the data, calculated via the integral
-\eqn{int_{R}(F(y)-H(y-\hat{x}))^2 \mathrm{d}y}.
+\eqn{\int_{R}(F(y)-H(y-\hat{x}))^2 \mathrm{d}y}.
 }
 \description{
 Calculates the CRPS of an arbitrary predictive distribution given the predictive PDF or CDF and the observed value
