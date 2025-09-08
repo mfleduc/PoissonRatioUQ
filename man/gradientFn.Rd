@@ -7,11 +7,11 @@
 gradientFn(alpha, counts, K)
 }
 \arguments{
-\item{alpha}{vector: Kernel coefficients alpha so that \eqn{f(x)= \sum \alpha_i \tilde{k}(x_i,x)}}
+\item{alpha}{vector: Kernel coefficients \eqn{\vec{\alpha}} so that \eqn{f(x)= \sum \alpha_i \tilde{k}(x_i,x)}}
 
 \item{counts}{vector: Count data, number observed at each observation point}
 
-\item{K}{matrix: Kernel matrix for the kernel function \eqn{\tilde{k}}}
+\item{K}{matrix: Kernel matrix for the equivalent kernel function \eqn{\tilde{k(x,y)}}}
 }
 \value{
 the gradient of the objective function at alpha
