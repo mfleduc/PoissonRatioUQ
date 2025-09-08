@@ -7,7 +7,7 @@
 #' @param counts numeric: If the data represents a binned process, the number of counts in each bin. Otherwise either the total number of points observed or you can just leave it empty and the code will infer the number of points from K.
 #' @param g scalar: Regularization strength. Default is 1
 #' @param c scalar: Parameter such that intensity \eqn{\lambda(s) = \frac{c}{2}f(s)^2}, default is 1.
-#' @returns The estimated intensity function, the parameters of the gamma approximation to its posterior at each location, and the fitted kernel coefficients of $f$
+#' @returns The estimated intensity function, the parameters of the gamma approximation to its posterior at each location, and the fitted kernel coefficients of \eqn{f(s) = \sum_i\alpha_i\tilde{k}(s,s_i)}
 #' @export
 permproccest <- function(K,counts=NaN,g=1,c=1){
   #Gather up all the needed stuff to do the calculation: Parameters, data, etc

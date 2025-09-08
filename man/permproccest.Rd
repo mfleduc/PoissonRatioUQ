@@ -16,7 +16,7 @@ permproccest(K, counts = NaN, g = 1, c = 1)
 \item{c}{scalar: Parameter such that intensity \eqn{\lambda(s) = \frac{c}{2}f(s)^2}, default is 1.}
 }
 \value{
-The estimated intensity function, the parameters of the gamma approximation to its posterior at each location, and the fitted kernel coefficients of $f$
+The estimated intensity function, the parameters of the gamma approximation to its posterior at each location, and the fitted kernel coefficients of \eqn{f(s) = \sum_i\alpha_i\tilde{k}(s,s_i)}
 }
 \description{
 Given a realization of a point process, estimates the underlying intensity function by assuming that the process
