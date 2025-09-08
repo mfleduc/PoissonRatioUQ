@@ -5,8 +5,8 @@
 #' @param pdf vector. the predictive PDF evaluated at the values in x. Default NULL. One of PDF or CDF must not be NULL
 #' @param cdf vector. the predictive CDF evaluated at the values in x. Default NULL. One of PDF or CDF must not be NULL
 #' @param xhat scalar. The observed value to compare with the predictive distribution.
-#' @returns The continuous rank probability score for the predictive model given the data, calculated via the integral 
-#' int_{R}(F(y)-H(y-xhat))^2 dy.
+#' @returns The continuous rank probability score for the predictive model given the data, calculated via the integral
+#' \eqn{int_{R}(F(y)-H(y-\hat{x}))^2 \mathrm{d}y}.
 #' @export
 CRPS <- function( x,pdf=NULL,cdf=NULL,xhat=NULL ){
   #Calculates the Continuous Rank Probability Score

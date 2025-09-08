@@ -2,7 +2,7 @@
 #' @title Estimation of point process intensities using a Permanental Process model
 #' @description Given a realization of a point process, estimates the underlying intensity function by assuming that the process
 #' intensity has the form L(s) = c/2f(s)^2, with f a Gaussian process. The estimation is assuming that f lies in a RKHS given by the kernel matrix K, and the likelihood function minimized is given by
-#' \eqn{L = \sum_{i=1}^d a_i \log(c/2*\int_{R_i}f(s)^2d\mu(s))- c/2||f||_2^2-g/2||f||_{h_k}^2$}. THe algorithm is outlined in https://proceedings.mlr.press/v70/walder17a.html (TODO: Update with link to this work when it is out)
+#' \eqn{L = \sum_{i=1}^d a_i \log(c/2*\int_{R_i}f(s)^2\mathrm{d}\mu(s))- c/2||f||_2^2-g/2||f||_{h_k}^2}. THe algorithm is outlined in https://proceedings.mlr.press/v70/walder17a.html (TODO: Update with link to this work when it is out)
 #' @param K matrix: Kernel matrix evaluated at the data points
 #' @param counts numeric: If the data represents a binned process, the number of counts in each bin. Otherwise either the total number of points observed or you can just leave it empty and the code will infer the number of points from K.
 #' @param g scalar: Regularization strength. Default is 1
