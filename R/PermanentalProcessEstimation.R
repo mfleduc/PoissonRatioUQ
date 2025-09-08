@@ -47,7 +47,7 @@ permproccest <- function(K,counts=NaN,g=1,c=1){
 #' @description Gradient of the RKHS-regularized Poisson point process likelihood with respect to the kernel coefficients
 #' @param alpha vector: Kernel coefficients \eqn{\vec{\alpha}} so that \eqn{f(x)= \sum \alpha_i \tilde{k}(x_i,x)}
 #' @param counts vector: Count data, number observed at each observation point
-#' @param K matrix: Kernel matrix for the equivalent kernel function \eqn{\tilde{k(x,y)}}
+#' @param K matrix: Kernel matrix for the equivalent kernel function \eqn{\tilde{k}(x,y)}
 #' @returns the gradient of the objective function at alpha
 #' @export
 gradientFn <- function(alpha, counts, K){
