@@ -2,7 +2,7 @@
 % Please edit documentation in R/BetaPrimeFunctions.R
 \name{rbetaprime}
 \alias{rbetaprime}
-\title{Beta-prime random number generator}
+\title{generalized Beta-prime random number generator}
 \usage{
 rbetaprime(n, alphaparam, betaparam, p = 1, q = 1)
 }
@@ -18,8 +18,8 @@ rbetaprime(n, alphaparam, betaparam, p = 1, q = 1)
 \item{q}{Scalar value, q parameter of the distribution}
 }
 \value{
-A vector of length n containing draws from the desired beta-prime distribution
+A vector of length n containing draws from the desired gen. beta-prime distribution
 }
 \description{
-generates random draws from the Beta-prime distribution with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization ). This uses the fact that if X ~ Beta(a,b) then q(X/(1-X))^(1/p) is BP(a,b,p,q)
+generates random draws from the generalized Beta-prime distribution with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization ). This uses the fact that if X ~ Beta(a,b) then q(X/(1-X))^(1/p) is BP(a,b,p,q)
 }

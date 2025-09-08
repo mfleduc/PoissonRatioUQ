@@ -1,10 +1,10 @@
-#' Utitility functions for the package PoissonRatioUQ
+#' Utility functions for the package PoissonRatioUQ
 #'@title Solar zenith angle
 #'@description Calculates the solar zenith angle at a particular point using the latitude, longitude, time in UTC, and julian day
 #'@param lat Scalar or matrix. Latitude of the points at which to calculate SZA. 0=equator, Degrees N.
 #'@param lon Scalar or matrix. Longitude of the points at which to calculate SZA. Degrees E, ranging from -180 to 180
 #'@param hourUTC Scalar. Time in UTC, hours since midnight
-#'@param julianDay Scalar. Julian day, i.e. 1 = Jan1, 2 = Jan 2, 32 = Feb 1, etc.
+#'@param julianDay Scalar. Julian day, AKA ordinal day, i.e. 1 = Jan1, 2 = Jan 2, 32 = Feb 1, etc.
 #'@returns Solar zenith angle, in degrees
 #'@export
 getsza <- function(lat, lon, hourUTC, julianDay){

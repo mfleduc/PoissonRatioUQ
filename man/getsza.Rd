@@ -13,7 +13,7 @@ getsza(lat, lon, hourUTC, julianDay)
 
 \item{hourUTC}{Scalar. Time in UTC, hours since midnight}
 
-\item{julianDay}{Scalar. Julian day, i.e. 1 = Jan1, 2 = Jan 2, 32 = Feb 1, etc.}
+\item{julianDay}{Scalar. Julian day, AKA ordinal day, i.e. 1 = Jan1, 2 = Jan 2, 32 = Feb 1, etc.}
 }
 \value{
 Solar zenith angle, in degrees
@@ -22,5 +22,5 @@ Solar zenith angle, in degrees
 Calculates the solar zenith angle at a particular point using the latitude, longitude, time in UTC, and julian day
 }
 \details{
-Utitility functions for the package PoissonRatioUQ
+Utility functions for the package PoissonRatioUQ
 }

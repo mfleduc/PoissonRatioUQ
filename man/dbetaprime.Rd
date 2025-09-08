@@ -2,7 +2,7 @@
 % Please edit documentation in R/BetaPrimeFunctions.R
 \name{dbetaprime}
 \alias{dbetaprime}
-\title{Beta-prime PDF}
+\title{generalized Beta-prime PDF}
 \usage{
 dbetaprime(x, alphaparam, betaparam, p = 1, q = 1)
 }
@@ -21,8 +21,8 @@ dbetaprime(x, alphaparam, betaparam, p = 1, q = 1)
 The beta-prime pdf with input parameters evaluated at the locations in x. Check values, possible issues for very large alphaval or betaval parameters
 }
 \description{
-Evaluates the Beta-Prime PDF with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization )
+Evaluates the generalized Beta-Prime PDF with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization )
 }
 \details{
-Functions for doing basic calculations with the beta-prime distribution
+Functions for doing basic calculations with the generalized beta-prime distribution
 }

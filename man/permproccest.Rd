@@ -13,15 +13,15 @@ permproccest(K, counts = NaN, g = 1, c = 1)
 
 \item{g}{scalar: Regularization strength. Default is 1}
 
-\item{c}{scalar: Parameter such that intensity L(s)=c/2 f(s)^2, default is 1.}
+\item{c}{scalar: Parameter such that intensity \eqn{\lambda(s) = \frac{c}{2}f(s)^2}, default is 1.}
 }
 \value{
 The estimated intensity function, the parameters of the gamma approximation to its posterior at each location, and the fitted kernel coefficients of $f$
 }
 \description{
 Given a realization of a point process, estimates the underlying intensity function by assuming that the process
-intensity has the form L(s) = c/2f(s)^2, with f a Gaussian process. The estimation is assuming that f lies in a RKHS given by the kernel matrix K, and the likelihood function minimized is given by
-\eqn{L = \sum_{i=1}^d a_i \log(c/2*\int_{R_i}f(s)^2\mathrm{d}\mu(s))- c/2||f||_2^2-g/2||f||_{h_k}^2}. THe algorithm is outlined in https://proceedings.mlr.press/v70/walder17a.html (TODO: Update with link to this work when it is out)
+intensity has the form \eqn{\lambda(s) = \frac{c}{2}f(s)^2}, with \eqn{f(s)} a Gaussian process. The estimation is regularized by assuming that \eqn{f(s)} lies in a RKHS given by the kernel \eqn{k(x,y)}, and the likelihood function is given by
+\eqn{L = \sum_{i=1}^d a_i \log(\frac{c}{2}\int_{R_i}f(s)^2\mathrm{d}\mu(s))- c/2||f||_2^2-g/2||f||_{h_k}^2}. Note that if the process is not binned, all counts are equal to 1 and the integral is replaced by evaluation of \eqn{f(s)} at the location of the observation. The algorithm is a slightly generalized version of the one outlined in https://proceedings.mlr.press/v70/walder17a.html (TODO: Add link to my work when it is out)
 }
 \details{
 Functions for doing estimation of the parameters of a permanental process model using equivalent kernel representations

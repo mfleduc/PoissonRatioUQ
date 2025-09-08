@@ -1,8 +1,8 @@
-#' Functions for doing basic calculations with the beta-prime distribution
+#' Functions for doing basic calculations with the generalized beta-prime distribution
 #'
-#' @title Beta-prime PDF
+#' @title generalized Beta-prime PDF
 #' @description
-#' Evaluates the Beta-Prime PDF with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization )
+#' Evaluates the generalized Beta-Prime PDF with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization )
 #' @param x scalar or matrix. Values at which to evaluate the PDF
 #' @param alphaparam Scalar value, alpha parameter of the distribution
 #' @param betaparam Scalar value, beta parameter of the distribution
@@ -20,9 +20,9 @@ dbetaprime <- function( x,alphaparam,betaparam, p=1,q=1 ){
   logpdf <- scaling + numerator - denominator
   return(exp(logpdf))
 }
-#' @title Beta-prime CDF
+#' @title generalized Beta-prime CDF
 #' @description
-#' Evaluates the Beta-Prime CDF with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization ).This uses the fact that if X ~ BP(a,b,p,q) then (X/q)^p  ~ BP(a,b)
+#' Evaluates the generalized Beta-Prime CDF with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization ).This uses the fact that if X ~ BP(a,b,p,q) then (X/q)^p  ~ BP(a,b)
 #' @param x scalar or matrix. Values at which to evaluate the CDF
 #' @param alphaparam Scalar value, alpha parameter of the distribution
 #' @param betaparam Scalar value, beta parameter of the distribution
@@ -37,15 +37,15 @@ pbetaprime <- function(x, alphaparam,betaparam,p=1,q=1){
   cdf <- pbeta(xqp/(1+xqp),alphaparam,betaparam)
   return(cdf)
 }
-#' @title Beta-prime random number generator
+#' @title generalized Beta-prime random number generator
 #' @description
-#' generates random draws from the Beta-prime distribution with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization ). This uses the fact that if X ~ Beta(a,b) then q(X/(1-X))^(1/p) is BP(a,b,p,q)
+#' generates random draws from the generalized Beta-prime distribution with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization ). This uses the fact that if X ~ Beta(a,b) then q(X/(1-X))^(1/p) is BP(a,b,p,q)
 #' @param n Scalar value, number of draws from the distribution
 #' @param alphaparam Scalar value, alpha parameter of the distribution
 #' @param betaparam Scalar value, beta parameter of the distribution
 #' @param p Scalar value, p parameter of the distribution
 #' @param q Scalar value, q parameter of the distribution
-#' @returns A vector of length n containing draws from the desired beta-prime distribution
+#' @returns A vector of length n containing draws from the desired gen. beta-prime distribution
 #' @export
 rbetaprime <- function(n, alphaparam,betaparam, p=1,q=1){
   X <- rbeta(n, alphaparam,betaparam)
