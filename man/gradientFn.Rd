@@ -11,7 +11,7 @@ gradientFn(alpha, counts, K)
 
 \item{counts}{vector: Count data, number observed at each observation point}
 
-\item{K}{matrix: Kernel matrix for the equivalent kernel function \eqn{\tilde{k(x,y)}}}
+\item{K}{matrix: Kernel matrix for the equivalent kernel function \eqn{\tilde{k}(x,y)}}
 }
 \value{
 the gradient of the objective function at alpha
