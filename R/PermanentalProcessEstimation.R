@@ -43,6 +43,31 @@ permproccest <- function(K,counts=NaN,g=1,c=1,maxiter=300){
   outputs <- list("lambda"=intensity, "alphaparam" = gamma_alpha, "betaparam"= gamma_beta, "kernelcoeffs" = alphahat)
   return(outputs)
 }
+#' @title Estimation of the ratio of point process intensities using a Permanental Process model
+#' @description Given a realizataion of two point processes, estimates the ratios of the underlying intensities by assuming that each intensity function is a squared Gaussian process.
+#' @param K1 matrix: Kernel matrix for the numerator evaluated at the data points.
+#' @param K2 matrix: Kernel matrix for the denominator evaluated at the data points. Default is K1.
+#' @param counts1 numeric: Count data for the numerator, see documentation for permprocest(). Must be the same type of process as the denominator process, i.e. both binned or both unbinned.
+#' @param counts2 numeric: Count data for the denominator, see documentation for permprocest(). Must be the same type of process as the numerator process, i.e. both binned or both unbinned.
+#' @param g1 scalar: Regularization strength (or prior precision) for the problem in the numerator. Default is 1
+#' @param c1 scalar: Parameter such that intensity \eqn{\lambda(s) = \frac{c}{2}f(s)^2} for the problem in the numerator. Default is 1.
+#' @param g2 scalar: Regularization strength (or prior precision) for the problem in the denominator. Default is g1
+#' @param c2 scalar: Parameter such that intensity \eqn{\lambda(s) = \frac{c}{2}f(s)^2} for the problem in the denominator. Default is c1.
+#' @param maxiter scalar: The maximum number of iterations.
+#' @returns The estimated intensity ratio (MAP) and the parameters of the Generalized Beta-Prime distribution describing the posterior
+#' @export
+ratioestimationpermproc <- function(K1, counts1, counts2, K2=K1,c1=1,g1=1,c2=c1,g2=g1,maxiter=300){
+  disp("Performing estimation for the numerator...")
+  numeratorresult <- permprocest(K1, counts1, c=c1, g=g1, maxiter=maxiter)
+  disp("Performing estimation for the denominator...")
+  numeratorresult <- permprocest(K2, counts2, c=c2, g=g2, maxiter=maxiter)
+  bpalpha <- numeratorresult$alphaparam
+  bpbeta <- denominatorresult$alphaparam
+  bpp <- array(1, dim=c(length(bpbeta),1))
+  bpq <- denominatorresult$betaparam/numeratorresult$betaparam
+  pmode <- bpq*((bpalpha*bpp-1)/(bpbeta*bpp+1))^(1/bpp) #MAP estimate
+  outputs <- list("ratio"=pmode, "bpalpha"=bpalpha,"bpbeta"=bpbeta,"bpp"=bpp,"bpq"=bpq)
+}
 #' @title Gradient of the RKHS-regularized Poisson point process likelihood with respect to the kernel coefficients
 #' @description Gradient of the RKHS-regularized Poisson point process likelihood with respect to the kernel coefficients
 #' @param alpha vector: Kernel coefficients \eqn{\vec{\alpha}} so that \eqn{f(s)= \sum \alpha_i \tilde{s}(s_i,s)}
