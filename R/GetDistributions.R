@@ -1,27 +1,32 @@
 #' Functions for calculating distributions given data
 #' @title Calculate the distribution of Z under a Gaussian assumption
-#' @description given count datasets a and b, calculates the Gaussian approximation of the distribution of Z = lambda_a / lambda_b, where lambda_i is the Poisson intensity of the channel that produced dataset i, using the delta method. Some details are available in (Park, T., Kashyap, V. L., Siemiginowska, A., van Dyk, D. A., Zezas, A., Heinke, C., and Wargelin, B. J.: Bayesian Estimation of Hardness
-#' Ratios: Modeling and Computations, In: The
-#' Astrophysical Journal, 2006) and (Gehrels, N.: Confidence limits for small numbers of events in astrophysical data, The Astrophysical Journal, 1986.). This model assumes that realizations at different spatial locations are independent!
+#' @description given count datasets a and b, calculates the Gaussian approximation of the distribution of Z = lambda_a / lambda_b, where lambda_i is the Poisson intensity of the channel that produced dataset i, using the delta method. Assumes a Gamma prior on Poisson data to get the distribution of the intensities, and then uses the delta method to get the approximate distribution of the ratio.
+#' This model assumes that realizations at different spatial locations are independent.
 #' @param a Matrix. The count data for the numerator. Rows correspond to spatial locations, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. MUST be a matrix or array right now, if you want a scalar use a 1x1 array. Missing data should be replaced by NaNs.
 #' @param b Matrix. The count data for the denominator. Rows correspond to spatial locations, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. MUST be a matrix or array right now, if you want a scalar use a 1x1 array. Missing data should be replaced by NaNs.
+#' @param a_prior list/array. The shape and rate parameters of the Gamma prior distribution for the Poisson intensity of the numerator process. Default is (1,0), i.e. uniform prior.
+#' @param b_prior list/array. The shape and rate parameters of the Gamma prior distribution for the Poisson intensity of the denominator process. Default is (1,0), i.e. uniform prior.
 #' @returns a list containing the means and standard deviations of the appropriate Gaussians.
 #' @export
-zgaussian <- function(a,b){
+
+
+zgaussian <- function(a,b, a_prior=c(1,0),b_prior=c(1,0)){
   # Returns the parameters of the distribution given by propagating the uncertainty in the photon counts
   #under the assumption that Z has a normal distribution
   #a = numerator, b = denominator
   suma <- rowSums(a,na.rm=TRUE)
-  mna <- rowMeans(a,na.rm=TRUE)
+  na <- rowSums(!is.nan(a))
+  num_alpha <- suma+a_prior[1]
+  num_beta <- na+a_prior[2]
+  # mna <- rowMeans(a,na.rm=TRUE)
   sumb <- rowSums(b,na.rm=TRUE)
-  mnb <- rowMeans(b,na.rm=TRUE)
-  mu <- mna/mnb #Mean of the Gaussian distribution for Z
-  sigma_a <- sqrt(abs(suma)+0.75)+1
-  sigma_b <- sqrt(abs(sumb)+0.75)+1 # Gehrels prescription to match 1-sigma distances
-  #btwn Poisson and Gaussian distributions
-  #N. Gehrels. “Confidence limits for small numbers of events in astrophysical data”. In: The
-  #Astrophysical Journal (1986)
-  sigma_Z <- abs(mu)*sqrt( sigma_a^2/suma^2+sigma_b^2/sumb^2 )
+  nb <- rowSums(!is.nan(a))
+  denom_alpha <- sumb+b_prior[1]
+  denom_beta <- nb+b_prior[2]
+  ## Calculate mean
+  mu <- (num_alpha/num_beta)*(denom_beta/denom_alpha) #Mean of the Gaussian distribution for Z
+
+  stdev <- mu*sqrt( 1/num_alpha+1/denom_alpha )
   param_list <- list('mean'=mu, 'stdev'=sigma_Z)
   return(param_list)
 }
@@ -120,13 +125,13 @@ tgivenab <- function(a,b,M,Z0,TauSq,priormn=0,priorvar=Inf,uncertainty="Gaussian
       priorvarinv <- solve(priorvar)
       SigmaT <- solve(priorvarinv+MtTsInv%*%M)
       mn <- SigmaT%*%(priorvarinv%*%priormn+(MtTsInv%*%(zparams$mean-Z0)))
-      SigmaZsqrt <- diag(zparams$stdev)
+      SigmaZsqrt <- diag(as.matrix(zparams$stdev))
       H <- SigmaT%*%MtTsInv%*%SigmaZsqrt
       cov <- SigmaT + H%*%t(H)
     }else{
       SigmaT <- solve(MtTsInv%*%M)
       mn <- SigmaT%*%(MtTsInv%*%(zparams$mean-Z0))
-      SigmaZsqrt <- diag(zparams$stdev)
+      SigmaZsqrt <- diag(as.matrix(zparams$stdev))
       H <- SigmaT%*%MtTsInv%*%SigmaZsqrt
       cov <- SigmaT + H%*%t(H)
     }
