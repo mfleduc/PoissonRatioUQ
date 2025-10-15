@@ -29,7 +29,7 @@ permproccest <- function(K,counts=NaN,g=1,c=1,maxiter=300){
   disp("Determining f...")
   a0 <- array(1, dim=c(length(counts),1))
   optval <- optim( (a0), function(X)objectivefn(X,counts,KTxx,c),gr=function(X)gradientFn(X,counts,KTxx)
-                   , method="CG",control=list(maxit=maxiter))
+                   , method="CG",control=list(maxit=maxiter,reltol=10^-6))
   alphahat <- optval$par
   #Get intensity
   f <- KTxx%*%alphahat
