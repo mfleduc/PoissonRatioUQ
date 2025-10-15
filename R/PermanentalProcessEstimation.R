@@ -60,7 +60,7 @@ ratioestimationpermproc <- function(K1, counts1, counts2, K2=K1,c1=1,g1=1,c2=c1,
   disp("Performing estimation for the numerator...")
   numeratorresult <- permproccest(K1, counts1, c=c1, g=g1, maxiter=maxiter)
   disp("Performing estimation for the denominator...")
-  numeratorresult <- permproccest(K2, counts2, c=c2, g=g2, maxiter=maxiter)
+  denominatorresult <- permproccest(K2, counts2, c=c2, g=g2, maxiter=maxiter)
   bpalpha <- numeratorresult$alphaparam
   bpbeta <- denominatorresult$alphaparam
   bpp <- array(1, dim=c(length(bpbeta),1))
