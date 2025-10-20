@@ -58,9 +58,9 @@ permproccest <- function(K,counts=NaN,g=1,c=1,maxiter=300){
 #' @export
 ratioestimationpermproc <- function(K1, counts1, counts2, K2=K1,c1=1,g1=1,c2=c1,g2=g1,maxiter=300){
   disp("Performing estimation for the numerator...")
-  numeratorresult <- permprocest(K1, counts1, c=c1, g=g1, maxiter=maxiter)
+  numeratorresult <- permproccest(K1, counts1, c=c1, g=g1, maxiter=maxiter)
   disp("Performing estimation for the denominator...")
-  numeratorresult <- permprocest(K2, counts2, c=c2, g=g2, maxiter=maxiter)
+  denominatorresult <- permproccest(K2, counts2, c=c2, g=g2, maxiter=maxiter)
   bpalpha <- numeratorresult$alphaparam
   bpbeta <- denominatorresult$alphaparam
   bpp <- array(1, dim=c(length(bpbeta),1))
