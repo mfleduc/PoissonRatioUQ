@@ -14,13 +14,25 @@ zgaussian <- function(a,b, a_prior=c(1,0),b_prior=c(1,0)){
   # Returns the parameters of the distribution given by propagating the uncertainty in the photon counts
   #under the assumption that Z has a normal distribution
   #a = numerator, b = denominator
-  suma <- rowSums(a,na.rm=TRUE)
-  na <- rowSums(!is.nan(a))
+  da <- dim(a)[2]
+  db <- dim(b)[2]
+  if(da>1){
+    suma <- rowSums(a,na.rm=TRUE)
+    na <- rowSums(!is.nan(a))
+  }else{
+    na <-1 
+    suma <- a
+  }
   num_alpha <- suma+a_prior[1]
   num_beta <- na+a_prior[2]
   # mna <- rowMeans(a,na.rm=TRUE)
-  sumb <- rowSums(b,na.rm=TRUE)
-  nb <- rowSums(!is.nan(a))
+  if(db>1){
+    sumb <- rowSums(b,na.rm=TRUE)
+    nb <- rowSums(!is.nan(b))
+  }else{
+    nb <- 1
+    sumb <- b
+  }
   denom_alpha <- sumb+b_prior[1]
   denom_beta <- nb+b_prior[2]
   ## Calculate mean
@@ -47,10 +59,22 @@ zbetaprime <-function(a,b,a1=1,a2=1,b1=0,b2=0){
   #\lambda_1 ~ Gamma(a1,b1), \lambda_2 ~ Gamma(a2,b2). This contains as a special case \lambda_i\sim x^{-k_i} by setting ai=1-ki,bi=0.
   #a,b are vectors of data, with a the counts observed in the upper channel (numerator) and b
   # the counts observed in the lower channel (denominator)
-  suma <- rowSums(a,na.rm=TRUE)
-  n1 <- rowSums(!is.nan(a))
-  sumb <- rowSums(b,na.rm=TRUE)
-  n2 <- rowSums(!is.nan(b))
+  da <- dim(a)[2]
+  db <- dim(b)[2]
+  if(da>1){
+    suma <- rowSums(a,na.rm=TRUE)
+    n1 <- rowSums(!is.nan(a))
+  }else{
+    n1 <-1 
+    suma <- a
+  }
+  if(db>1){
+    sumb <- rowSums(b,na.rm=TRUE)
+    n2 <- rowSums(!is.nan(b))
+  }else{
+    n2 <- 1
+    sumb <- b
+  }
   alpha <- suma+a1#Calculating the parameters
   beta <- sumb+a2#
   p <- beta/beta#Will always be ones most likely
