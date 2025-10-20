@@ -149,13 +149,15 @@ tgivenab <- function(a,b,M,Z0,TauSq,priormn=0,priorvar=Inf,uncertainty="Gaussian
       priorvarinv <- solve(priorvar)
       SigmaT <- solve(priorvarinv+MtTsInv%*%M)
       mn <- SigmaT%*%(priorvarinv%*%priormn+(MtTsInv%*%(zparams$mean-Z0)))
-      SigmaZsqrt <- diag(as.matrix(zparams$stdev))
+      SigmaZsqrt <- eye(nSpatial)
+      diag(SigmaZsqrt) <- ((zparams$stdev))
       H <- SigmaT%*%MtTsInv%*%SigmaZsqrt
       cov <- SigmaT + H%*%t(H)
     }else{
       SigmaT <- solve(MtTsInv%*%M)
       mn <- SigmaT%*%(MtTsInv%*%(zparams$mean-Z0))
-      SigmaZsqrt <- diag(as.matrix(zparams$stdev))
+      SigmaZsqrt <- eye(nSpatial)
+      diag(SigmaZsqrt) <- ((zparams$stdev))
       H <- SigmaT%*%MtTsInv%*%SigmaZsqrt
       cov <- SigmaT + H%*%t(H)
     }
