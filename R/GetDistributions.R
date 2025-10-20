@@ -39,7 +39,7 @@ zgaussian <- function(a,b, a_prior=c(1,0),b_prior=c(1,0)){
   mu <- (num_alpha/num_beta)*(denom_beta/denom_alpha) #Mean of the Gaussian distribution for Z
 
   stdev <- mu*sqrt( 1/num_alpha+1/denom_alpha )
-  param_list <- list('mean'=mu, 'stdev'=sigma_Z)
+  param_list <- list('mean'=mu, 'stdev'=stdev)
   return(param_list)
 }
 #' @title Calculate the distribution of Z under a Beta-Prime assumption
