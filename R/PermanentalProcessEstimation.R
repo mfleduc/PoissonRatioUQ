@@ -14,10 +14,13 @@ permproccest <- function(K,counts=NaN,g=1,c=1,maxiter=300){
   if(length(counts)==1){
     #Allows counts to be the number of spatial locations, the actual counts, or left alone and inferred from K
     if(!is.nan(counts)){
-      counts <- array(1,dim=c(1,counts))
+      counts <- array(1,dim=c(counts, 1))
     }else{
-      counts <- array(1, dim=c(1, dim(K)[1]))
+      counts <- array(1, dim=c(dim(K)[1], 1))
     }
+  }
+  if(dim(counts)[2]>1){
+    counts <- rowSums(counts)
   }
   #First: Eigendecomposition of the kernel matrix
   disp("Generating equivalent kernel matrix...")
