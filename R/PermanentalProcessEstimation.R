@@ -38,7 +38,9 @@ permproccest <- function(K,counts=NaN,g=1,c=1,maxiter=300){
   f <- KTxx%*%alphahat
   intensity <- 0.5*c*f^2
   #Parameters of the posterior distributions
-  Dinv <- diag(2*counts/alphahat^2)
+  # diag(Dinv) <- 0.5*(rowSums(sima20_binned[maskA,]))/optval$par^2
+  Dinv <- eye(length(counts))
+  diag(Dinv) <- 2*(counts/alphahat^2)
   Sigma <- KTxx - KTxx%*%solve(Dinv+KTxx, KTxx)#Posterior covariance of f
   predvar <- diag(Sigma)
   gamma_alpha <- (f^2+predvar)^2/(2*predvar*(2*f^2+predvar))
