@@ -14,10 +14,13 @@ permproccest <- function(K,counts=NaN,g=1,c=1,maxiter=300){
   if(length(counts)==1){
     #Allows counts to be the number of spatial locations, the actual counts, or left alone and inferred from K
     if(!is.nan(counts)){
-      counts <- array(1,dim=c(1,counts))
+      counts <- array(1,dim=c(counts, 1))
     }else{
-      counts <- array(1, dim=c(1, dim(K)[1]))
+      counts <- array(1, dim=c(dim(K)[1], 1))
     }
+  }
+  if(dim(counts)[2]>1){
+    counts <- rowSums(counts)
   }
   #First: Eigendecomposition of the kernel matrix
   disp("Generating equivalent kernel matrix...")
@@ -35,7 +38,9 @@ permproccest <- function(K,counts=NaN,g=1,c=1,maxiter=300){
   f <- KTxx%*%alphahat
   intensity <- 0.5*c*f^2
   #Parameters of the posterior distributions
-  Dinv <- diag(2*counts/alphahat^2)
+  # diag(Dinv) <- 0.5*(rowSums(sima20_binned[maskA,]))/optval$par^2
+  Dinv <- eye(length(counts))
+  diag(Dinv) <- 2*(counts/alphahat^2)
   Sigma <- KTxx - KTxx%*%solve(Dinv+KTxx, KTxx)#Posterior covariance of f
   predvar <- diag(Sigma)
   gamma_alpha <- (f^2+predvar)^2/(2*predvar*(2*f^2+predvar))
