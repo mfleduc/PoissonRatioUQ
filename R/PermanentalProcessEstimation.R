@@ -82,10 +82,11 @@ ratioestimationpermproc <- function(K1, counts1, counts2, K2=K1,c1=1,g1=1,c2=c1,
 #' @export
 gradientFn <- function(alpha, counts, K){
   val <- zeros(length(alpha),1)
+  KtAlpha <- (K%*%alpha)
   for(ii in 1:length(counts)){
-    val <- val-2*counts[ii]*K[,ii]/(K%*%alpha)
+    val <- val-2*counts[ii]*K[,ii]/KtAlpha
   }
-  val <- val+K%*%alpha
+  val <- val+KtAlpha
   return(val)
 }
 #' @title Objective function of the RKHS-regularized Poisson point process likelihood with respect to the kernel coefficients
