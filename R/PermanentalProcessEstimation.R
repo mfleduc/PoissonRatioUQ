@@ -38,7 +38,9 @@ permproccest <- function(K,counts=NaN,g=1,c=1,maxiter=300){
   f <- KTxx%*%alphahat
   intensity <- 0.5*c*f^2
   #Parameters of the posterior distributions
-  Dinv <- diag(2*counts/alphahat^2)
+  # diag(Dinv) <- 0.5*(rowSums(sima20_binned[maskA,]))/optval$par^2
+  Dinv <- eye(length(counts))
+  diag(Dinv) <- 2*(counts/alphahat^2)
   Sigma <- KTxx - KTxx%*%solve(Dinv+KTxx, KTxx)#Posterior covariance of f
   predvar <- diag(Sigma)
   gamma_alpha <- (f^2+predvar)^2/(2*predvar*(2*f^2+predvar))
@@ -80,10 +82,11 @@ ratioestimationpermproc <- function(K1, counts1, counts2, K2=K1,c1=1,g1=1,c2=c1,
 #' @export
 gradientFn <- function(alpha, counts, K){
   val <- zeros(length(alpha),1)
+  KtAlpha <- (K%*%alpha)
   for(ii in 1:length(counts)){
-    val <- val-2*counts[ii]*K[,ii]/(K%*%alpha)
+    val <- val-2*counts[ii]*K[,ii]/KtAlpha
   }
-  val <- val+K%*%alpha
+  val <- val+KtAlpha
   return(val)
 }
 #' @title Objective function of the RKHS-regularized Poisson point process likelihood with respect to the kernel coefficients

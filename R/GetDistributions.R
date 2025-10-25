@@ -123,7 +123,7 @@ tgivenab <- function(a,b,M,Z0,TauSq,priormn=0,priorvar=Inf,uncertainty="Gaussian
     nSpatial <- dim(M)[2]
   }
   if(length(Z0)==1){
-    Z0 <- matrix(z0,nrow=dim(a)[1],ncol=1)
+    Z0 <- matrix(Z0,nrow=dim(a)[1],ncol=1)
   }
   if(length(TauSq)==1){
     TauSq <- eye(dim(a)[1])*TauSq
