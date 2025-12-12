@@ -9,7 +9,7 @@
 #' @param maxiter scalar: The maximum number of iterations.
 #' @returns The estimated intensity function, the parameters of the gamma approximation to its posterior at each location, and the fitted kernel coefficients of \eqn{f(s) = \sum_i\alpha_i\tilde{k}(s,s_i)}
 #' @export
-permproccest <- function(K,counts=NaN,g=1,c=1,maxiter=300){
+permprocest <- function(K,counts=NaN,g=1,c=1,maxiter=300){
   #Gather up all the needed stuff to do the calculation: Parameters, data, etc
   if(length(counts)==1){
     #Allows counts to be the number of spatial locations, the actual counts, or left alone and inferred from K
@@ -63,9 +63,9 @@ permproccest <- function(K,counts=NaN,g=1,c=1,maxiter=300){
 #' @export
 ratioestimationpermproc <- function(K1, counts1, counts2, K2=K1,c1=1,g1=1,c2=c1,g2=g1,maxiter=300){
   disp("Performing estimation for the numerator...")
-  numeratorresult <- permproccest(K1, counts1, c=c1, g=g1, maxiter=maxiter)
+  numeratorresult <- permprocest(K1, counts1, c=c1, g=g1, maxiter=maxiter)
   disp("Performing estimation for the denominator...")
-  denominatorresult <- permproccest(K2, counts2, c=c2, g=g2, maxiter=maxiter)
+  denominatorresult <- permprocest(K2, counts2, c=c2, g=g2, maxiter=maxiter)
   bpalpha <- numeratorresult$alphaparam
   bpbeta <- denominatorresult$alphaparam
   bpp <- array(1, dim=c(length(bpbeta),1))
