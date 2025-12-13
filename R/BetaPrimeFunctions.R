@@ -90,6 +90,6 @@ zbetaprime <-function(a,b,a1=1,a2=1,b1=0,b2=0){
   beta <- sumb+a2#
   p <- beta/beta#Will always be ones most likely
   q <- (b2+n2)/(b1+n1)
-  param_list <- list('alpha'=alpha,'beta'=beta,'p'=p,'q'=q)
+  param_list <- list('bpalpha'=alpha,'bpbeta'=beta,'bpp'=p,'bpq'=q)
   return(param_list)
 }
