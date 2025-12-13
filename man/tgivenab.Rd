@@ -7,12 +7,20 @@
 tgivenab(
   a,
   b,
-  M,
-  Z0,
-  TauSq,
-  priormn = 0,
-  priorvar = Inf,
-  uncertainty = "Gaussian"
+  m,
+  z0,
+  p,
+  spatial = TRUE,
+  a1 = 1,
+  a2 = 1,
+  b1 = 0,
+  b2 = 0,
+  K1 = NA,
+  K2 = K1,
+  g1 = 1,
+  c1 = 1,
+  g2 = g1,
+  c2 = c1
 )
 }
 \arguments{
@@ -20,21 +28,26 @@ tgivenab(
 
 \item{b}{Matrix. The count data for the denominator. Rows correspond to spatial locations/channels, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. MUST be a matrix or array right now, if you want a scalar use a 1x1 array. Missing data should be replaced by NaNs.}
 
-\item{M}{scalar or matrix. slope parameter of the linear regression of Z(T).}
+\item{m}{scalar or vector. Slope parameter of the model Z(T)=(mT+z_0)^p.}
 
-\item{Z0}{scalar or vector. Intercept parameter of the linear regression of Z(T).}
+\item{z0}{scalar or vector. Intercept parameter of the model Z(T)=(mT+z_0)^p.}
 
-\item{TauSq}{scalar or matrix. Covariance matrix of the residuals of the linear regression.}
+\item{p}{scalar or vector. Exponent parameter of the model Z(T)=(mT+z_0)^p.}
 
-\item{priormn}{scalar or vector. Mean of Gaussian prior for the temperature. Default is 0.}
+\item{spatial}{boolean. If TRUE (default), run the permanental process model. If FALSE, runs the pointwise estimation scheme.}
 
-\item{priorvar}{scalar or matrix. variance of the Gaussian prior for the temperature. Default is Inf (uninformative prior).}
+\item{a1, a2, b1, b2}{scalars: Parameters of the prior distribution for the pointwise model. See documentation for zbetaprime()}
 
-\item{uncertainty}{string. Either "Gaussian", in which case Z is assumed to have a Gaussian distribution determined by the function zgaussian, or "none", in which case mean(a)/mean(b) is used as a point estimate of Z. Default is "Gaussian"}
+\item{K1, K2}{Matrices. Kernel matrices for the permanental process model. See ratioestimationpermproc() for details.}
+
+\item{g1, g2, c1, c2}{scalars, other parameters for the permanental process model. See ratioestimationpermproc() for more details. This funciton assumes they are the same for both models.}
 }
 \value{
-mean and standard deviation of the distribution T|a,b with Z=mT+z0, T|Z ~ N((a/b-z0)/m, tau^2/m), Z|a,b from zgaussian(), and T ~ N(mu0,Sigma0) where mu0 is the prior mean and Sigma0 the prior covariance matrix.
+Parameters of the shifted generalized Beta-Prime distribution T|a,b using the permanental process model, where the band ratio Z(T)=(mT+z_0)^p.
 }
 \description{
 Given count data, a prior, and the parameters of the distribution Z|T ~N(mT+z0,tausq) determines the distribution of T|data under the assumption that the counts are either Gaussian or provide a point estimate of Z.
+}
+\details{
+Functions for calculating distributions given data
 }
