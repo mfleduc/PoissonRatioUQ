@@ -1,6 +1,3 @@
-This package contains code for uncertainty quantification for models of ratios of count data. The model was developed with an eye for applications in the estimation of thermospheric neutral temperature from LBH data, so a lot of the terminology used will derive from that context.
+This package contains code for uncertainty quantification for models of ratios of count data, as well as extensions for models that are affine functions of count ratios. This code is a work in progress and will change significantly over the coming months. The model was developed with an eye for applications in the estimation of thermospheric neutral temperature from LBH data, so a lot of the terminology used will derive from that context. It should be considered to be in beta right now, once I am comfortable with everything that will change. If you use it and find an error, open a pull request or message me. Per the license, I take no responsibility for issues arising from use of this package. 
 
-
-
-The package can be installed with the command devtools::install\_github('mfleduc/PoissonRatioUQ'). More details to come.
-
+The package can be installed with the command devtools::install_github('mfleduc/PoissonRatioUQ'). More details to come. 
