@@ -27,7 +27,7 @@ tgivenab <- function(a,b,m,z0,p,spatial=TRUE,a1=1,a2=1,b1=0,b2=0, K1=NA,K2=K1,g1
   ## Now: Parameters for the distribution of T
   shift <- -z0/m
   # tp <- p
-  tq <- zparams$bpq/m
+  tq <- zparams$bpq^(1/p)/m
   tmode <- tq*( (pmax(zparams$bpalpha*p-1,0) )/(zparams$bpbeta*p+1 ))^(1/p)-z0/m
   tparams <- list("T"=tmode,"ratio"=zparams$ratio,"shift"=shift, "bpalpha"=zparams$bpalpha,"bpbeta"=zparams$bpbeta, "bpp"=p,"bpq"=tq)
   return(tparams)
