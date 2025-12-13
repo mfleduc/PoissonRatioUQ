@@ -2,7 +2,7 @@
 % Please edit documentation in R/GetDistributions.R
 \name{tgivenab}
 \alias{tgivenab}
-\title{Determine the parameters of the distribution of the temperature given the data under the assumption that Z is either a point estimate or has a Gaussian distribution, and is an affine function of T}
+\title{Determine the parameters of the distribution of the temperature given the data under the assumption that Z has a Beta-Prime distribution and that \eqn{Z=(mT+z_0)^p}. This leads to T having a shifted Beta-Prime distribution.}
 \usage{
 tgivenab(
   a,
@@ -46,7 +46,7 @@ tgivenab(
 Parameters of the shifted generalized Beta-Prime distribution T|a,b using the permanental process model, where the band ratio Z(T)=(mT+z_0)^p.
 }
 \description{
-Given count data, a prior, and the parameters of the distribution Z|T ~N(mT+z0,tausq) determines the distribution of T|data under the assumption that the counts are either Gaussian or provide a point estimate of Z.
+Determines the distribution of T|data under the assumption that the counts are Poisson distributed, or a realization of a Poisson Point Process. Can perform pointwise estimation or estimation using a permanental process model that allows for explicit modeling of spatial correlation.
 }
 \details{
 Functions for calculating distributions given data

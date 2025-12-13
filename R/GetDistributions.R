@@ -1,6 +1,6 @@
 #' Functions for calculating distributions given data
-#' @title Determine the parameters of the distribution of the temperature given the data under the assumption that Z is either a point estimate or has a Gaussian distribution, and is an affine function of T
-#' @description Given count data, a prior, and the parameters of the distribution Z|T ~N(mT+z0,tausq) determines the distribution of T|data under the assumption that the counts are either Gaussian or provide a point estimate of Z.
+#' @title Determine the parameters of the distribution of the temperature given the data under the assumption that Z has a Beta-Prime distribution and that \eqn{Z=(mT+z_0)^p}. This leads to T having a shifted Beta-Prime distribution. 
+#' @description Determines the distribution of T|data under the assumption that the counts are Poisson distributed, or a realization of a Poisson Point Process. Can perform pointwise estimation or estimation using a permanental process model that allows for explicit modeling of spatial correlation. 
 #' @param a Matrix. The count data for the numerator. Rows correspond to spatial locations/channels, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. MUST be a matrix or array right now, if you want a scalar use a 1x1 array. Missing data should be replaced by NaNs.
 #' @param b Matrix. The count data for the denominator. Rows correspond to spatial locations/channels, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. MUST be a matrix or array right now, if you want a scalar use a 1x1 array. Missing data should be replaced by NaNs.
 #' @param m scalar or vector. Slope parameter of the model Z(T)=(mT+z_0)^p.
