@@ -2,7 +2,7 @@
 % Please edit documentation in R/GetDistributions.R
 \name{tgivenab}
 \alias{tgivenab}
-\title{Determine the parameters of the distribution of the temperature given the data under the assumption that Z has a Beta-Prime distribution and that \eqn{Z=(mT+z_0)^p}.}
+\title{Determine the parameters of the distribution of the temperature given the data under the assumption that Z has a Beta-Prime distribution and that \eqn{Z=(mT+z_0)^p}. This leads to T having a shofted Beta-Prime distribution.}
 \usage{
 tgivenab(
   a,
