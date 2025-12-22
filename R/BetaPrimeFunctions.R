@@ -8,7 +8,7 @@
 #' @param betaparam Scalar value, beta parameter of the distribution
 #' @param p Scalar value, p parameter of the distribution
 #' @param q Scalar value, q parameter of the distribution
-#' @returns The beta-prime pdf with input parameters evaluated at the locations in x. Check values, possible issues for very large alphaval or betaval parameters
+#' @returns The beta-prime pdf with input parameters evaluated at the locations in x. Check values, possible issues for very large alphaparam or betaparam parameters
 #' @export
 dbetaprime <- function( x,alphaparam,betaparam, p=1,q=1 ){
   mask <- x<=0
@@ -28,7 +28,7 @@ dbetaprime <- function( x,alphaparam,betaparam, p=1,q=1 ){
 #' @param betaparam Scalar value, beta parameter of the distribution
 #' @param p Scalar value, p parameter of the distribution
 #' @param q Scalar value, q parameter of the distribution
-#' @returns The beta-prime cdf with input parameters evaluated at the locations in x. Check values, possible issues for very large alphaval or betaval parameters
+#' @returns The beta-prime cdf with input parameters evaluated at the locations in x. Check values, possible issues for very large alphaparam or betaparam parameters
 #' @export
 pbetaprime <- function(x, alphaparam,betaparam,p=1,q=1){
   mask <- x<=0
@@ -36,6 +36,21 @@ pbetaprime <- function(x, alphaparam,betaparam,p=1,q=1){
   xqp <- (x/q)^p
   cdf <- pbeta(xqp/(1+xqp),alphaparam,betaparam)
   return(cdf)
+}
+#' @title generalized Beta-prime quantile function
+#' @description
+#' Evaluates the generalized Beta-Prime quantile function with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization ).This uses the fact that if X ~ BP(a,b,p,q) then (X/q)^p  ~ BP(a,b)
+#' @param probs scalar or matrix. Probabilities at which to evaluate the quantile function.
+#' @param alphaparam Scalar value, alpha parameter of the distribution
+#' @param betaparam Scalar value, beta parameter of the distribution
+#' @param p Scalar value, p parameter of the distribution
+#' @param q Scalar value, q parameter of the distribution
+#' @returns The beta-prime quantile function with input parameters evaluated at the probabilities. Check values, possible issues for very large alphaparam or betaparam parameters
+#' @export
+qbetaprime <- function(probs, alphaparam,betaparam,p=1,q=1){
+  Z <- qbeta(probs, alphaparam, betaparam)
+  X <- q*(Z/(1-Z))^(1/p)
+  return(X)
 }
 #' @title generalized Beta-prime random number generator
 #' @description
@@ -76,7 +91,7 @@ zbetaprime <-function(a,b,a1=1,a2=1,b1=0,b2=0){
     suma <- rowSums(a,na.rm=TRUE)
     n1 <- rowSums(!is.nan(a))
   }else{
-    n1 <-1 
+    n1 <-1
     suma <- a
   }
   if(db>1){
@@ -88,8 +103,9 @@ zbetaprime <-function(a,b,a1=1,a2=1,b1=0,b2=0){
   }
   alpha <- suma+a1#Calculating the parameters
   beta <- sumb+a2#
-  p <- beta/beta#Will always be ones most likely
+  p <- 1#Will always be ones most likely
   q <- (b2+n2)/(b1+n1)
-  param_list <- list('bpalpha'=alpha,'bpbeta'=beta,'bpp'=p,'bpq'=q)
+  pmode <- q*((alpha*p-1)/(beta*p+1))^(1/p) #MAP estimate
+  param_list <- list('ratio'=pmode, 'bpalpha'=alpha,'bpbeta'=beta,'bpp'=p,'bpq'=q)
   return(param_list)
 }

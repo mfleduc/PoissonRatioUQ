@@ -1,6 +1,6 @@
 #' Functions for calculating distributions given data
-#' @title Determine the parameters of the distribution of the temperature given the data under the assumption that Z has a Beta-Prime distribution and that \eqn{Z=(mT+z_0)^p}. This leads to T having a shifted Beta-Prime distribution. 
-#' @description Determines the distribution of T|data under the assumption that the counts are Poisson distributed, or a realization of a Poisson Point Process. Can perform pointwise estimation or estimation using a permanental process model that allows for explicit modeling of spatial correlation. 
+#' @title Determine the parameters of the distribution of the temperature given the data under the assumption that Z has a Beta-Prime distribution and that \eqn{Z=(mT+z_0)^p}. This leads to T having a shifted Beta-Prime distribution.
+#' @description Determines the distribution of T|data under the assumption that the counts are Poisson distributed, or a realization of a Poisson Point Process. Can perform pointwise estimation or estimation using a permanental process model that allows for explicit modeling of spatial correlation.
 #' @param a Matrix. The count data for the numerator. Rows correspond to spatial locations/channels, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. MUST be a matrix or array right now, if you want a scalar use a 1x1 array. Missing data should be replaced by NaNs.
 #' @param b Matrix. The count data for the denominator. Rows correspond to spatial locations/channels, columns to realizations. Must have the same number of rows as b, but need not have the same number of columns. MUST be a matrix or array right now, if you want a scalar use a 1x1 array. Missing data should be replaced by NaNs.
 #' @param m scalar or vector. Slope parameter of the model Z(T)=(mT+z_0)^p.
@@ -8,9 +8,9 @@
 #' @param p scalar or vector. Exponent parameter of the model Z(T)=(mT+z_0)^p.
 #' @param spatial boolean. If TRUE (default), run the permanental process model. If FALSE, runs the pointwise estimation scheme.
 #' @param a1,a2,b1,b2 scalars: Parameters of the prior distribution for the pointwise model. See documentation for zbetaprime()
-#' @param K1,K2 Matrices. Kernel matrices for the permanental process model. See ratioestimationpermproc() for details. 
-#' @param g1,g2,c1,c2 scalars, other parameters for the permanental process model. See ratioestimationpermproc() for more details. This funciton assumes they are the same for both models.
-#' 
+#' @param K1,K2 Matrices. Kernel matrices for the permanental process model. See ratioestimationpermproc() for details.
+#' @param g1,g2,c1,c2 scalars, other parameters for the permanental process model. See ratioestimationpermproc() for more details. This function assumes they are the same for both models.
+#'
 #' @returns Parameters of the shifted generalized Beta-Prime distribution T|a,b using the permanental process model, where the band ratio Z(T)=(mT+z_0)^p.
 #' @export
 tgivenab <- function(a,b,m,z0,p,spatial=TRUE,a1=1,a2=1,b1=0,b2=0, K1=NA,K2=K1,g1=1,c1=1,g2=g1,c2=c1){
@@ -31,7 +31,7 @@ tgivenab <- function(a,b,m,z0,p,spatial=TRUE,a1=1,a2=1,b1=0,b2=0, K1=NA,K2=K1,g1
   tmode <- tq*( (pmax(zparams$bpalpha*p-1,0) )/(zparams$bpbeta*p+1 ))^(1/p)-z0/m
   tparams <- list("T"=tmode,"ratio"=zparams$ratio,"shift"=shift, "bpalpha"=zparams$bpalpha,"bpbeta"=zparams$bpbeta, "bpp"=p,"bpq"=tq)
   return(tparams)
-  
+
   # zparams <- zgaussian(a,b)
   # if(length(M)==1){
   #   nSpatial <- dim(a)[1] #Expanding into a spatial model

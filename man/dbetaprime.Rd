@@ -18,7 +18,7 @@ dbetaprime(x, alphaparam, betaparam, p = 1, q = 1)
 \item{q}{Scalar value, q parameter of the distribution}
 }
 \value{
-The beta-prime pdf with input parameters evaluated at the locations in x. Check values, possible issues for very large alphaval or betaval parameters
+The beta-prime pdf with input parameters evaluated at the locations in x. Check values, possible issues for very large alphaparam or betaparam parameters
 }
 \description{
 Evaluates the generalized Beta-Prime PDF with parameters alpha,beta,p,q (parameterization used in https://en.wikipedia.org/wiki/Beta_prime_distribution#Generalization )

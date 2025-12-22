@@ -7,22 +7,21 @@
 permprocest(K, counts = NaN, g = 1, c = 1, maxiter = 300)
 }
 \arguments{
-\item{K}{matrix: Kernel matrix evaluated at the data points}
+\item{K}{matrix: Kernel matrix evaluated at the spatial locations}
 
-\item{counts}{numeric: If the data represents a binned process, the number of counts in each bin. Otherwise either the total number of points observed or you can just leave it empty and the code will infer the number of points from K.}
+\item{counts}{numeric: The number of counts in each bin.}
 
 \item{g}{scalar: Regularization strength (or prior precision). Default is 1}
 
-\item{c}{scalar: Parameter such that intensity \eqn{\lambda(s) = \frac{c}{2}f(s)^2}, default is 1.}
+\item{c}{scalar: Parameter such that intensity \eqn{\vec{\Lambda} = \frac{c}{2}\vec{f}^2}, default is 1.}
 
 \item{maxiter}{scalar: The maximum number of iterations.}
 }
 \value{
-The estimated intensity function, the parameters of the gamma approximation to its posterior at each location, and the fitted kernel coefficients of \eqn{f(s) = \sum_i\alpha_i\tilde{k}(s,s_i)}
+The estimated intensities, the parameters of the gamma approximation to its posterior at each location, and the fitted kernel coefficients of \eqn{\hat{f} = \tilde{K}\vec{\psi}}
 }
 \description{
-Given a realization of a point process, estimates the underlying intensity by assuming that it has the form \eqn{\lambda(s) = \frac{c}{2}f(s)^2}, with \eqn{f(s)} a Gaussian process. The estimation is regularized by assuming that \eqn{f(s)} lies in a RKHS given by the kernel \eqn{k(x,y)}, and the likelihood function is given by
-\eqn{L = \sum_{i=1}^d a_i \log(\frac{c}{2}f(s)^2)- \frac{c}{2}||f||_2^2-\frac{g}{2}||f||_{H_k}^2}. Note that if the process is binned, the interpretation is that instead of recovering a latent function given by \eqn{f(s)=\sum\alpha_i \tilde{k}(s,s_i)} the algorithm recovers a latent vector \eqn{\vec{f}} under the prior \eqn{\vec{f}\sim\mathcal{N}(0,g^{-1}K)}, and the result is given by \eqn{\vec{f}=\tilde{K}\vec{\alpha}} for some \eqn{\vec{\alpha}} to be retrieved. The algorithm is a slightly generalized version of the one outlined in https://proceedings.mlr.press/v70/walder17a.html (TODO: Add link to my work when it is out)
+Given Possion data, estimates the underlying intensity by assuming that it has the form \eqn{\vec{\Lambda} = \frac{c}{2}\vec{f}^2}, with \eqn{\vec{f}} a Gaussian vector. The algorithm recovers a latent vector \eqn{\vec{f}} under the prior \eqn{\vec{f}\sim\mathcal{N}(0,g^{-1}K)}, and the result is given by \eqn{\vec{f}=\tilde{K}\vec{\psi}} for some \eqn{\vec{\psi}} to be retrieved. The algorithm is adapted from the one outlined in https://proceedings.mlr.press/v70/walder17a.html and was used in https://egusphere.copernicus.org/preprints/2025/egusphere-2025-5570/ to estimate thermospheric temperature
 }
 \details{
 Functions for doing estimation of the parameters of a permanental process model using equivalent kernel representations
