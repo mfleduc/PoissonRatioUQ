@@ -7,13 +7,13 @@
 objectivefn(alpha, counts, K, c)
 }
 \arguments{
-\item{alpha}{vector: Kernel coefficients alpha so that \eqn{f(s)= \sum \alpha_i \tilde{k}(s_i,s)}}
+\item{alpha}{vector: Kernel coefficients alpha so that \eqn{\vec{f}=\tilde{K}\vec{\psi}}}
 
 \item{counts}{vector: Count data, number observed at each observation point}
 
 \item{K}{matrix: Kernel matrix for the kernel function \eqn{\tilde{k}}}
 
-\item{c}{scalar: Value so that \eqn{\lambda(s)=\frac{c}{2}f(s)^2}}
+\item{c}{scalar: Value so that \eqn{\vec{\Lambda} = \frac{c}{2}\vec{f}^2}}
 }
 \value{
 the value of the objective function at alpha

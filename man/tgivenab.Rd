@@ -40,7 +40,7 @@ tgivenab(
 
 \item{K1, K2}{Matrices. Kernel matrices for the permanental process model. See ratioestimationpermproc() for details.}
 
-\item{g1, g2, c1, c2}{scalars, other parameters for the permanental process model. See ratioestimationpermproc() for more details. This funciton assumes they are the same for both models.}
+\item{g1, g2, c1, c2}{scalars, other parameters for the permanental process model. See ratioestimationpermproc() for more details. This function assumes they are the same for both models.}
 }
 \value{
 Parameters of the shifted generalized Beta-Prime distribution T|a,b using the permanental process model, where the band ratio Z(T)=(mT+z_0)^p.

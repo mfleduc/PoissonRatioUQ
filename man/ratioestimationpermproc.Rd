@@ -19,17 +19,17 @@ ratioestimationpermproc(
 \arguments{
 \item{K1}{matrix: Kernel matrix for the numerator evaluated at the data points.}
 
-\item{counts1}{numeric: Count data for the numerator, see documentation for permprocest(). Must be the same type of process as the denominator process, i.e. both binned or both unbinned.}
+\item{counts1}{numeric: Count data for the numerator, see documentation for permprocest().}
 
-\item{counts2}{numeric: Count data for the denominator, see documentation for permprocest(). Must be the same type of process as the numerator process, i.e. both binned or both unbinned.}
+\item{counts2}{numeric: Count data for the denominator, see documentation for permprocest().}
 
 \item{K2}{matrix: Kernel matrix for the denominator evaluated at the data points. Default is K1.}
 
-\item{c1}{scalar: Parameter such that intensity \eqn{\lambda(s) = \frac{c}{2}f(s)^2} for the problem in the numerator. Default is 1.}
+\item{c1}{scalar: Parameter such that intensity \eqn{\vec{\Lambda} = \frac{c}{2}\vec{f}^2} for the problem in the numerator. Default is 1.}
 
 \item{g1}{scalar: Regularization strength (or prior precision) for the problem in the numerator. Default is 1}
 
-\item{c2}{scalar: Parameter such that intensity \eqn{\lambda(s) = \frac{c}{2}f(s)^2} for the problem in the denominator. Default is c1.}
+\item{c2}{scalar: Parameter such that intensity \eqn{\vec{\Lambda} = \frac{c}{2}\vec{f}^2} for the problem in the denominator. Default is c1.}
 
 \item{g2}{scalar: Regularization strength (or prior precision) for the problem in the denominator. Default is g1}
 
