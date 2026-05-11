@@ -6,7 +6,9 @@ Author: Matthew LeDuc
 Maintainer: Matthew LeDuc <matthew.leduc@colorado.edu>
 Description: Uncertainty quantification for problems of estimating ratios of Poisson intensity parameters.
 Imports:
-    pracma
+    pracma,
+    statmod,
+    hypergeo
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
