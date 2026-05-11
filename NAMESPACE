@@ -2,10 +2,13 @@
 
 export(CRPS)
 export(CRPSgaussian)
+export(CRPSgbp)
 export(dbetaprime)
+export(e_2xfx_gq)
 export(gradientFn)
 export(hpdintervalgaussian)
 export(hpdset)
+export(inc_beta)
 export(objectivefn)
 export(pbetaprime)
 export(permprocest)
