@@ -17,7 +17,6 @@ CRPS <- function( x,pdf=NULL,cdf=NULL,xhat=NULL ){
 if(is.null(cdf)){
   stopifnot(!is.null(pdf))
   cdf <- numeric(length(x))
-
   f <- approxfun(x, pdf, method="linear", yleft=0, yright=0, rule=2)
   cdf[1]=0
   for(ii in 2:length(cdf)){
