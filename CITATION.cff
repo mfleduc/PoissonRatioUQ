@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the article from preferred-citation along with the version of the software used."
+authors:
+  - family-names: "LeDuc"
+    given-names: "Matthew"
+title: "PoissonRatioUQ: An R package for band ratio uncertainty quantification"
+version: "1.0.0"
+doi: " 10.5281/zenodo.20492078"
+date-released: "2026-06-04"
+url: "https://arxiv.org/abs/2602.07165"
+repository-code: "https://github.com"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "LeDuc"
+      given-names: "Matthew"
+    - family-names: "Matsuo"
+      given-names: "Tomoko"
+  title: "PoissonRatioUQ: An R package for band ratio uncertainty quantification"
+  journal: "arXiv preprint arXiv:2602.07165"
+  year: 2026
+
